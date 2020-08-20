@@ -17,7 +17,7 @@ namespace DietDiary.App.Concrete
                Meals = new List<Meal>();
            }*/
 
-        public ConsoleKeyInfo AddNewMealView(MenuActionService actionService)
+       /* public ConsoleKeyInfo AddNewMealView(MenuActionService actionService)
         {
             Console.Clear();
             var productsView = actionService.GetMenuActionsByMenuName("AddNewMealMenu");
@@ -28,9 +28,9 @@ namespace DietDiary.App.Concrete
             }
             var chosenOption = Console.ReadKey();
             return chosenOption;
-        }
+        }*/
 
-        public int AddNewMeal(ProductService productService, char category)
+       /* public int AddNewMeal(ProductService productService, char category)
         {
 
             int mealCategory, idOfMeal;
@@ -67,13 +67,15 @@ namespace DietDiary.App.Concrete
             Items.Add(meal);
             MealView(meal);
             return meal.Id;
-        }
+        }*/
 
         private int CalculateCalorific(Meal meal)
         {
             int calorific = 0;
             foreach (var product in meal.products)
+            {
                 calorific += product.Calorific;
+            }
             return calorific;
         }
 
@@ -81,21 +83,27 @@ namespace DietDiary.App.Concrete
         {
             double carbos = 0;
             foreach (var product in meal.products)
+            {
                 carbos += product.Carbos;
+            }
             return carbos;
         }
         private double CalculateProteins(Meal meal)
         {
             double proteins = 0;
             foreach (var product in meal.products)
+            {
                 proteins += product.Proteins;
+            }
             return proteins;
         }
         private double CalculateFats(Meal meal)
         {
             double fats = 0;
             foreach (var product in meal.products)
+            {
                 fats += product.Fats;
+            }
             return fats;
         }
 
@@ -108,7 +116,6 @@ namespace DietDiary.App.Concrete
             {
                 Console.WriteLine($"-{item.Name}");
             }
-
             Console.WriteLine("Kalorczyność posiłku - " + CalculateCalorific(meal));
             Console.WriteLine("Zawartość węglowodanów - " + CalculateCarbos(meal));
             Console.WriteLine("Zawartość białka - " + CalculateProteins(meal));
@@ -120,7 +127,6 @@ namespace DietDiary.App.Concrete
         {
             int calorificWholeDay = 0;
             double carbosDay = 0, fatsDay = 0, proteinsDay = 0;
-
             foreach (var meal in Items)
             {
                 calorificWholeDay += CalculateCalorific(meal);
@@ -143,12 +149,10 @@ namespace DietDiary.App.Concrete
             {
                 Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
             }
-
             foreach (var meal in Items)
             {
                 MealView(meal);
             }
-
             CalorificWholeDayView();
         }
 

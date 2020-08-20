@@ -1,8 +1,10 @@
 ﻿using DietDiary.App.Abstract;
 using DietDiary.App.Concrete;
+using DietDiary.Domain.Common;
 using DietDiary.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DietDiary.App.Managers
@@ -13,6 +15,7 @@ namespace DietDiary.App.Managers
         private readonly MenuActionService _actionService;
         private readonly MealService _mealService;
         private IService<Product> _productService;
+
         public int AddNewMeal()
         {
             Console.Clear();
@@ -65,6 +68,45 @@ namespace DietDiary.App.Managers
             _mealService.MealView(meal);
             return meal.Id;
         }
+
+        public void RemoveMeal()
+        {
+            if (!_mealService.GetAllItems().Any())
+            {
+                Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
+                return;
+            }
+            int idOfMeal, decision;
+            bool isMealChosen = false;
+            Meal mealToRemove;
+            do
+            {
+                Console.WriteLine("\nWybierz posiłek, który chcesz usunąć");
+                foreach (var meal in _mealService.GetAllItems())
+                {
+                    Console.WriteLine($"{meal.Id}.{(NameOfMeal)meal.Category}");
+                }
+
+                Int32.TryParse(Console.ReadLine(), out idOfMeal);
+                mealToRemove = _mealService.GetItemById(idOfMeal)
+                if(mealToRemove == null)
+                {
+                    Console.WriteLine("Nie ma takiego posiłku");
+                    continue;
+                }
+                isMealChosen = true;
+            } while (!isMealChosen);
+            _mealService.MealView(mealToRemove);
+            Console.WriteLine("Czy na pewno chcesz usunąć ten posiłek?");
+            Console.WriteLine("1 - Tak \n2 - Nie");
+            int.TryParse(Console.ReadKey().KeyChar.ToString(), out decision);
+            if (decision == 2)
+            {
+                return;
+            }
+        }
+
+
 
 
 
