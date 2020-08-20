@@ -13,6 +13,7 @@ namespace DietDiary
             //6. Pomiary ciała 
             //  6a. Wyswietl pomiary
             //  6b. Jesli uzytkownik chce zupdatowac to niech wcisnie XXX
+            bool firstCycle = true;
             MenuActionService actionService = new MenuActionService();
             UserDataService userDataService = new UserDataService();
             ProductService productService = new ProductService();
@@ -28,7 +29,7 @@ namespace DietDiary
             actionService = Initialize(actionService);*/
             while (true)
             {
-                
+                Console.Clear();
                 var mainMenu = actionService.GetMenuActionsByMenuName("Main");
                Console.WriteLine();
                 for (int i = 0; i < mainMenu.Count; i++)

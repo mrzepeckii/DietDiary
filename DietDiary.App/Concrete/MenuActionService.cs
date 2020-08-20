@@ -48,16 +48,16 @@ namespace DietDiary.App.Concrete
             AddItem(new MenuAction(1, "Zaktualizuj dane", "UserDataMenu"));
 
             AddItem(new MenuAction(0, "Powrót do głównego menu", "ProductsMenu"));
-            AddItem(new MenuAction(2, "Wyświetl aktualną listę produktów", "ProductsMenu"));
-            AddItem(new MenuAction(3, "Dodaj produkt", "ProductsMenu"));
-            AddItem(new MenuAction(4, "Usuń produkt", "ProductsMenu"));
+            AddItem(new MenuAction(1, "Wyświetl aktualną listę produktów", "ProductsMenu"));
+            AddItem(new MenuAction(2, "Dodaj produkt", "ProductsMenu"));
+            AddItem(new MenuAction(3, "Usuń produkt", "ProductsMenu"));
 
             AddItem(new MenuAction(0, "Powrót do menu listy porduktów", "ProductsCategory"));
-            AddItem(new MenuAction(1, "Mięso", "ProductsMenu"));
-            AddItem(new MenuAction(2, "Warzywa", "ProductsMenu"));
-            AddItem(new MenuAction(3, "Owoce", "ProductsMenu"));
-            AddItem(new MenuAction(4, "Produkty zbożowe", "ProductsMenu"));
-            AddItem(new MenuAction(5, "Nabiał", "ProductsMenu"));
+            AddItem(new MenuAction(1, "Mięso", "ProductsCategory"));
+            AddItem(new MenuAction(2, "Warzywa", "ProductsCategory"));
+            AddItem(new MenuAction(3, "Owoce", "ProductsCategory"));
+            AddItem(new MenuAction(4, "Produkty zbożowe", "ProductsCategory"));
+            AddItem(new MenuAction(5, "Nabiał", "ProductsCategory"));
 
             AddItem(new MenuAction(0, "Powrót do głównego menu", "AddNewMealMenu"));
             for (int i = 1; i < 6; i++)

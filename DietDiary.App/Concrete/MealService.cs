@@ -145,6 +145,7 @@ namespace DietDiary.App.Concrete
 
         public void MealsView()
         {
+            Console.Clear();
             if (!Items.Any())
             {
                 Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
@@ -154,6 +155,8 @@ namespace DietDiary.App.Concrete
                 MealView(meal);
             }
             CalorificWholeDayView();
+            Console.WriteLine("Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
+            Console.ReadKey();
         }
 
         /* public Meal FindMealById(int idOfMeal)

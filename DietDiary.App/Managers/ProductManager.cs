@@ -1,8 +1,10 @@
 ﻿using DietDiary.App.Abstract;
 using DietDiary.App.Concrete;
+using DietDiary.Domain.Common;
 using DietDiary.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DietDiary.App.Managers
@@ -20,30 +22,41 @@ namespace DietDiary.App.Managers
 
         public void ChoseOptionInProductMenu()
         {
-            var productsView = _actionService.GetMenuActionsByMenuName("ProductsMenu");
-            Console.WriteLine();
-            for (int i = 0; i < productsView.Count; i++)
-                Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-
-            var chosenOption = Console.ReadKey();
-
-            switch (chosenOption.KeyChar)
+            
+            while (true)
             {
-                case '1':
-                    var id = AddNewProduct();
+                Console.Clear();
+                var productsView = _actionService.GetMenuActionsByMenuName("ProductsMenu");
+                Console.WriteLine();
+                for (int i = 0; i < productsView.Count; i++)
+                {
+                    Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
+                }
+
+                var chosenOption = Console.ReadKey();
+                if (chosenOption.KeyChar == '0')
+                {
                     break;
-                case '2':
-                    RemoveItemById();
-                    break;
-                case '3':
-                    ItemView();
-                    break;
-                default:
-                    break;
+                }
+                switch (chosenOption.KeyChar)
+                {
+                    case '1':
+                        ItemView();
+                        break;
+                    case '2':
+                        var id = AddNewProduct();
+                        break;
+                    case '3':
+                        RemoveItemById();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         public int AddNewProduct()
         {
+            Console.Clear();
             var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
             Console.WriteLine();
             for (int i = 0; i < productsView.Count; i++)
@@ -52,7 +65,7 @@ namespace DietDiary.App.Managers
             var category = Console.ReadKey();
             int numberOfCate, calorific;
             double carbos, fats, proteins;
-            Int32.TryParse(category.ToString(), out numberOfCate);
+            Int32.TryParse(category.KeyChar.ToString(), out numberOfCate);
             if (numberOfCate == 0)
             {
                 return 0;
@@ -88,14 +101,29 @@ namespace DietDiary.App.Managers
 
         public void ItemView()
         {
-            foreach (var product in _productService.GetAllItems())
+            Console.Clear();
+            List<Product> products = _productService.GetAllItems();
+            if (products.Any())
             {
-                Console.WriteLine($"{product.Id}. {product.Name}");
+                foreach (var product in _productService.GetAllItems())
+                {
+                    Console.WriteLine($"{product.Id}. {product.Name}");
+                }
+                Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                Console.ReadKey();
             }
+            else
+            {
+                Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
+                Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                Console.ReadKey();
+            }
+           
         }
 
         public void RemoveItemById()
         {
+            Console.Clear();
             int id;
             Console.WriteLine("Wybierz produkt z listy: ");
             ItemView();

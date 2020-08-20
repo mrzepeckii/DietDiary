@@ -26,6 +26,13 @@ namespace DietDiary.App.Managers
         public int AddNewMeal()
         {
             Console.Clear();
+            if (!_productService.GetAllItems().Any())
+            {
+                Console.WriteLine("Nie ma produktów w bazie - dodaj produkt.");
+                Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
+                Console.ReadKey();
+                return 0;
+            }
             var mealsView = _actionService.GetMenuActionsByMenuName("AddNewMealMenu");
             Console.WriteLine();
             for (int i = 0; i < mealsView.Count; i++)
@@ -37,7 +44,7 @@ namespace DietDiary.App.Managers
             int mealCategory, idOfMeal, idOfProduct;
             Product productToAdd;
             List<Product> products = new List<Product>();
-            Int32.TryParse(category.ToString(), out mealCategory);
+            Int32.TryParse(category.KeyChar.ToString(), out mealCategory);
             if (mealCategory == 0)
             {
                 return 0;
@@ -57,7 +64,7 @@ namespace DietDiary.App.Managers
                 productToAdd = _productService.GetItemById(idOfProduct);
                 if(productToAdd == null)
                 {
-                    Console.WriteLine("\nNie ma takiego produku");
+                    Console.WriteLine("\nNie ma takiego produktu");
                     continue;
                 }
                 products.Add(productToAdd);
@@ -73,6 +80,8 @@ namespace DietDiary.App.Managers
             Meal meal = new Meal() { Id = id +1, Category = mealCategory, products = products };
             _mealService.AddItem(meal);
             _mealService.MealView(meal);
+            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
+            Console.ReadKey();
             return meal.Id;
         }
 
