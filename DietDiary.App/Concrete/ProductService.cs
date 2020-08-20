@@ -9,14 +9,14 @@ namespace DietDiary.App.Concrete
 {
     public class ProductService : BaseService<Product>
     {
-        public List<Product> Products;
+      //  public List<Product> Products;
 
-        public ProductService()
+      /*  public ProductService()
         {
             Products = new List<Product>();
-        }
+        }*/
 
-        public ConsoleKeyInfo ProductsView(MenuActionService actionService)
+        /*public ConsoleKeyInfo ProductsView(MenuActionService actionService)
         {
             var productsView = actionService.GetMenuActionsByMenuName("ProductsMenu");
             Console.WriteLine();
@@ -25,7 +25,7 @@ namespace DietDiary.App.Concrete
 
             var chosenOption = Console.ReadKey();
             return chosenOption;
-        }
+        }*/
 
      /*   public int AddNewProduct(int category, int calorific, string name, double proteins, double carbos, double fats)
         {
@@ -43,7 +43,7 @@ namespace DietDiary.App.Concrete
             return product.Id;
         }*/
 
-        public Product FindProductById(int productId)
+     /*   public Product FindProductById(int productId)
         {
             Product tempProduct = new Product();
             foreach (var item in Products)
@@ -53,30 +53,30 @@ namespace DietDiary.App.Concrete
                     break;
                 }       
             return tempProduct;
-        }
+        }*/
 
-        public Product FindProductByName(string name)
+       /* public Product FindProductByName(string name)
         {
             Product tempProduct = new Product();
             foreach (var item in Products)
                 if (item.Name == name)
                     tempProduct = item;
             return tempProduct;
-        }
+        }*/
 
-        public void ListOfProductsView(char productCategory)
+      /*  public void ListOfProductsView(char productCategory)
         {
             int productCategoryId;
             Int32.TryParse(productCategory.ToString(), out productCategoryId);
             foreach (var item in Products)
                 if(item.Category == productCategoryId)
                         Console.WriteLine($"\n{item.Name}");
-        }
+        }*/
 
-        public void ListOfProductsView()
+     /*   public void ListOfProductsView()
         {
             foreach (var item in Products)
                     Console.WriteLine($"\n{item.Id}.{item.Name}");
-        }
+        }*/
     }
 }

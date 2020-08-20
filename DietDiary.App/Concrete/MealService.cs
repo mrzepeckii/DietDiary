@@ -168,7 +168,7 @@ namespace DietDiary.App.Concrete
              return tempMeal;
          }*/
 
-        public int RemoveMealView()
+       /* public int RemoveMealView()
         {
             if (!Items.Any())
             {
@@ -203,7 +203,7 @@ namespace DietDiary.App.Concrete
                 return 0;
             }
             return idOfMeal;
-        }
+        } */
 
         /* public void RemoveMeal(int removeId)
          {

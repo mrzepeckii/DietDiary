@@ -16,6 +16,13 @@ namespace DietDiary.App.Managers
         private readonly MealService _mealService;
         private IService<Product> _productService;
 
+        public MealManager(MenuActionService actionService, MealService mealService, IService<Product> productService)
+        {
+            _actionService = actionService;
+            _mealService = mealService;
+            _productService = productService;
+        }
+
         public int AddNewMeal()
         {
             Console.Clear();
@@ -88,7 +95,7 @@ namespace DietDiary.App.Managers
                 }
 
                 Int32.TryParse(Console.ReadLine(), out idOfMeal);
-                mealToRemove = _mealService.GetItemById(idOfMeal)
+                mealToRemove = _mealService.GetItemById(idOfMeal);
                 if(mealToRemove == null)
                 {
                     Console.WriteLine("Nie ma takiego posiłku");
