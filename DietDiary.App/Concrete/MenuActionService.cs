@@ -1,4 +1,5 @@
 ﻿using DietDiary.App.Common;
+using DietDiary.Domain.Common;
 using DietDiary.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace DietDiary.App.Concrete
             AddItem(new MenuAction(0, "Powrót do głównego menu", "AddNewMealMenu"));
             for (int i = 1; i < 6; i++)
             {
-                AddItem(new MenuAction(i, i.ToString(), "AddNewMealMenu"));
+                AddItem(new MenuAction(i, ((NameOfMeal)i).ToString(), "AddNewMealMenu"));
             }
 
             AddItem(new MenuAction(0, "Powrót do głównego menu", "BodyMeasurementsMenu"));
