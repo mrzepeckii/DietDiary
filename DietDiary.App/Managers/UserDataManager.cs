@@ -23,6 +23,7 @@ namespace DietDiary.App.Managers
             for (int i = 0; i < userDataMenu.Count; i++)
                 Console.WriteLine($"{userDataMenu[i].Id}. {userDataMenu[i].Name}");
             var chosenOption = Console.ReadKey();
+            Console.Clear();
             if (chosenOption.KeyChar != '1')
                 return;
             int age = 0;

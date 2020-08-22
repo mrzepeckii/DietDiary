@@ -25,7 +25,7 @@ namespace DietDiary.App.Concrete
         private void Initialize()
         {
             AddItem(new MenuAction(1, "Dane uzytkownika", "Main"));
-            AddItem(new MenuAction(2, "Lista produktów", "Main"));
+            AddItem(new MenuAction(2, "Produkty", "Main"));
             AddItem(new MenuAction(3, "Dodaj posiłek", "Main"));
             AddItem(new MenuAction(4, "Usuń posiłek", "Main"));
             AddItem(new MenuAction(5, "Wyświetl aktualne posiłki", "Main"));

@@ -28,8 +28,8 @@ namespace DietDiary.App.Managers
             Console.Clear();
             if (!_productService.GetAllItems().Any())
             {
-                Console.WriteLine("Nie ma produktów w bazie - dodaj produkt.");
-                Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
+                Console.WriteLine("\nNie ma produktów w bazie - dodaj produkt.");
+                Console.WriteLine("Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
                 Console.ReadKey();
                 return 0;
             }
@@ -79,16 +79,19 @@ namespace DietDiary.App.Managers
             Meal meal = new Meal() { Id = id +1, Category = mealCategory, products = products };
             _mealService.AddItem(meal);
             _mealService.MealView(meal);
-            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
+            Console.WriteLine("Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
             Console.ReadKey();
             return meal.Id;
         }
 
         public void RemoveMeal()
         {
+            Console.Clear();
             if (!_mealService.GetAllItems().Any())
             {
                 Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
+                Console.WriteLine("Wcisnij dowolny przycisk w celu powrotu do menu głównego.");
+                Console.ReadKey();
                 return;
             }
             int idOfMeal, decision;
