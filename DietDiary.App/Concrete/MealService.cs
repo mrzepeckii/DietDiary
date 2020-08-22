@@ -10,65 +10,6 @@ namespace DietDiary.App.Concrete
 {
     public class MealService : BaseService<Meal>
     {
-        //  public List<Meal> Meals;
-
-        /*   public MealService()
-           {
-               Meals = new List<Meal>();
-           }*/
-
-       /* public ConsoleKeyInfo AddNewMealView(MenuActionService actionService)
-        {
-            Console.Clear();
-            var productsView = actionService.GetMenuActionsByMenuName("AddNewMealMenu");
-            Console.WriteLine();
-            for (int i = 0; i < productsView.Count; i++)
-            {
-                Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-            }
-            var chosenOption = Console.ReadKey();
-            return chosenOption;
-        }*/
-
-       /* public int AddNewMeal(ProductService productService, char category)
-        {
-
-            int mealCategory, idOfMeal;
-            int idOfProduct = 1;
-            Product tempProduct;
-            List<Product> products = new List<Product>();
-            int.TryParse(category.ToString(), out mealCategory);
-            if (mealCategory == 0)
-                return 0;
-            while (true)
-            {
-                Console.WriteLine("\nW celu zakończenia dodawania produktów wybierz 0.");
-                Console.WriteLine("Wybierz produkt z listy:");
-                productService.ListOfProductsView();
-                int.TryParse(Console.ReadKey().KeyChar.ToString(), out idOfProduct);
-                if (idOfProduct == 0)
-                    break;
-                if (!productService.Products.Exists(x => x.Id == idOfProduct))
-                {
-                    Console.WriteLine("\nNie ma takiego produku");
-                    continue;
-                }
-                tempProduct = productService.FindProductById(idOfProduct);
-                products.Add(tempProduct);
-                Console.WriteLine($"\nDodano {tempProduct.Name}");
-                Console.Clear();
-            }
-            if (products.Count == 0)
-                return 0;
-            Console.Clear();
-            Console.WriteLine("\nWprowadz ID posiłku: ");
-            while (!int.TryParse(Console.ReadLine().ToString(), out idOfMeal)) { Console.WriteLine("ID musi być liczbą całkowitą"); };
-            Meal meal = new Meal() { Category = mealCategory, Id = idOfMeal, products = products };
-            Items.Add(meal);
-            MealView(meal);
-            return meal.Id;
-        }*/
-
         private int CalculateCalorific(Meal meal)
         {
             int calorific = 0;

@@ -10,12 +10,6 @@ namespace DietDiary.Domain.Entity
         public double Weight { get; set; }
         public int Height { get; set; }
 
-
-       /* public UserData()
-        {
-            Age = 0; Weight = 0; Height = 0; 
-        }*/
-
         public override string ToString()
         {
             return "Wiek - " + Age + "\r\nWzrost - " + Height + "\r\nWaga - " + Weight;

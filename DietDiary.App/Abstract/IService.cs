@@ -11,10 +11,8 @@ namespace DietDiary.App.Abstract
         int AddItem(T item);
         int UpdateItem(T item);
         void RemoveItem(T item);
-        //void ShowDetails(T item);
         List<T> GetAllItems();
         T GetItemById(int id);
-        //T GetItemByName(string name);
         int GetLastId();
 
     }

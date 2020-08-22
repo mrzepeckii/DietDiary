@@ -12,11 +12,6 @@ namespace DietDiary.Domain.Entity
         public double Chest { get; set; }
         public double Biceps { get; set; }
 
-      /*  public BodyMeasurements()
-        {
-            Calf = 0; Thight = 0; Waist = 0; Chest = 0; Biceps = 0;
-        }*/
-
         public override string ToString()
         {
             return $"Łydka - {Calf} \nUdo - {Thight} \nTalia - {Waist} \nKlatka - {Chest} \nBiceps - {Biceps}";

@@ -41,7 +41,7 @@ namespace DietDiary.App.Managers
                 switch (chosenOption.KeyChar)
                 {
                     case '1':
-                        ItemView();
+                        ItemsView(true);
                         break;
                     case '2':
                         var id = AddNewProduct();
@@ -70,6 +70,7 @@ namespace DietDiary.App.Managers
             {
                 return 0;
             }
+            Console.Clear();
             Console.WriteLine("\nWprowadź nazwę produktu: ");
             string nameOfProduct = Console.ReadLine();
             Console.WriteLine("\nWprowadź ilość kalorii: ");
@@ -99,26 +100,31 @@ namespace DietDiary.App.Managers
             return product.Id;
         }
 
-        public void ItemView()
+        public void ItemsView(bool viewInMenu)
         {
-            Console.Clear();
+            if (viewInMenu)
+            {
+                Console.Clear();
+            }
             List<Product> products = _productService.GetAllItems();
             if (products.Any())
             {
-                foreach (var product in _productService.GetAllItems())
+                foreach (var product in products)
                 {
                     Console.WriteLine($"{product.Id}. {product.Name}");
                 }
-                Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                Console.ReadKey();
+                if (viewInMenu)
+                {
+                    Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                    Console.ReadKey();
+                } 
             }
             else
             {
                 Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
                 Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
                 Console.ReadKey();
-            }
-           
+            }  
         }
 
         public void RemoveItemById()
@@ -126,7 +132,7 @@ namespace DietDiary.App.Managers
             Console.Clear();
             int id;
             Console.WriteLine("Wybierz produkt z listy: ");
-            ItemView();
+            ItemsView(false);
             var tempId = Console.ReadLine();
             Int32.TryParse(tempId, out id);
             var item = _productService.GetItemById(id);

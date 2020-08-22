@@ -10,9 +10,6 @@ namespace DietDiary
     {
         static void Main(string[] args)
         {
-            //6. Pomiary ciała 
-            //  6a. Wyswietl pomiary
-            //  6b. Jesli uzytkownik chce zupdatowac to niech wcisnie XXX
             MenuActionService actionService = new MenuActionService();
             UserDataService userDataService = new UserDataService();
             ProductService productService = new ProductService();
@@ -21,12 +18,7 @@ namespace DietDiary
             ProductManager productManager = new ProductManager(productService, actionService);
             MealManager mealManager = new MealManager(actionService, mealService, productService);
             UserDataManager userDataManager = new UserDataManager(userDataService, actionService);
-           /* productService.AddNewProduct(1, 123, "wolowina", 30, 40, 10);
-            productService.AddNewProduct(2, 400, "marchewka", 30, 50, 70);
-            productService.AddNewProduct(3, 100, "mandarynka", 40, 10, 10);
-            productService.AddNewProduct(4, 140, "ryz", 56, 13, 13);
-            productService.AddNewProduct(5, 144, "skyr", 42, 11, 15);
-            actionService = Initialize(actionService);*/
+            BodyMeasurementsManager bodyManager = new BodyMeasurementsManager(measurementsService, actionService);
             while (true)
             {
                 Console.Clear();
@@ -56,8 +48,7 @@ namespace DietDiary
                         mealService.MealsView();
                         break;
                     case '6':
-                        var keyInfoBody = measurementsService.BodyMeasurementsView(actionService);
-                        measurementsService.UpdateBodyMesurements(keyInfoBody);
+                        bodyManager.UpdateBodyMesurements();
                         break;
                     default:
                         Console.WriteLine("\nNie ma takiej opcji w menu \r\n");

@@ -53,7 +53,6 @@ namespace DietDiary.App.Managers
             {
                 Console.WriteLine("\nW celu zakończenia dodawania produktów wybierz 0.");
                 Console.WriteLine("Wybierz produkt z listy:");
-                //_productService.ListOfProductsView();
                 foreach (var product in _productService.GetAllItems())
                 {
                     Console.WriteLine($"\n{product.Id}.{product.Name}");

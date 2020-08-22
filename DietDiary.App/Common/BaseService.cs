@@ -33,12 +33,6 @@ namespace DietDiary.App.Common
             return tempItem;
         }
 
-        /* public T GetItemByName(string name)
-         {
-             var tempItem = Items.FirstOrDefault(p => p.Name == name);
-             return tempItem;
-         }*/
-
         public void RemoveItem(T item)
         {
             Items.Remove(item);
@@ -67,13 +61,5 @@ namespace DietDiary.App.Common
             }
             return lastId;
         }
-
-
-        /*public void ShowDetails(T item)
-        {
-            throw new NotImplementedException();
-        }*/
-
-
     }
 }

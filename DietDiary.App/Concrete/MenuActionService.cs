@@ -9,18 +9,6 @@ namespace DietDiary.App.Concrete
 {
     public class MenuActionService : BaseService<MenuAction>
     {
-        //  private List<MenuAction> menuActions;
-
-        /* public MenuActionService()
-         {
-             menuActions = new List<MenuAction>();
-         }*/
-
-        /*   public void AddNewMenuAction(int id, string name, string menuName)
-           {
-               MenuAction menuAction = new MenuAction { Id = id, MenuName = menuName, Name = name };
-               menuActions.Add(menuAction);
-           }*/
         public MenuActionService()
         {
             Initialize();
