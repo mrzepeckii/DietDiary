@@ -40,7 +40,7 @@ namespace DietDiary.App.Managers
                 Console.WriteLine($"{mealsView[i].Id}. {mealsView[i].Name}");
             }
             var category = Console.ReadKey();
-
+            Console.Clear();
             int mealCategory, idOfMeal, idOfProduct;
             Product productToAdd;
             List<Product> products = new List<Product>();
@@ -52,6 +52,11 @@ namespace DietDiary.App.Managers
             while (true)
             {
                 Console.WriteLine("\nW celu zakończenia dodawania produktów wybierz 0.");
+                Console.WriteLine("Aktualna lista produktów w posiłku: ");
+                foreach (var product in products)
+                {
+                    Console.WriteLine($"-{product.Name}");
+                }
                 Console.WriteLine("Wybierz produkt z listy:");
                 foreach (var product in _productService.GetAllItems())
                 {
@@ -78,7 +83,7 @@ namespace DietDiary.App.Managers
             var id = _mealService.GetLastId();
             Meal meal = new Meal() { Id = id +1, Category = mealCategory, products = products };
             _mealService.AddItem(meal);
-            _mealService.MealView(meal);
+            MealView(meal);
             Console.WriteLine("Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
             Console.ReadKey();
             return meal.Id;
@@ -114,7 +119,7 @@ namespace DietDiary.App.Managers
                 }
                 isMealChosen = true;
             } while (!isMealChosen);
-            _mealService.MealView(mealToRemove);
+            MealView(mealToRemove);
             Console.WriteLine("Czy na pewno chcesz usunąć ten posiłek?");
             Console.WriteLine("1 - Tak \n2 - Nie");
             int.TryParse(Console.ReadKey().KeyChar.ToString(), out decision);
@@ -122,11 +127,60 @@ namespace DietDiary.App.Managers
             {
                 return;
             }
+            _mealService.RemoveItem(mealToRemove);
         }
 
+        public void MealView(Meal meal)
+        {
+            Console.WriteLine("\n--------------------------------");
+            Console.WriteLine((NameOfMeal)meal.Category);
+            Console.WriteLine("Lista produktów w posiłku: ");
+            foreach (var item in meal.products)
+            {
+                Console.WriteLine($"-{item.Name}");
+            }
+            Console.WriteLine("Kalorczyność posiłku - " + _mealService.CalculateCalorific(meal));
+            Console.WriteLine("Zawartość węglowodanów - " + _mealService.CalculateCarbos(meal));
+            Console.WriteLine("Zawartość białka - " + _mealService.CalculateProteins(meal));
+            Console.WriteLine("Zawartość tłuszczy - " + _mealService.CalculateFats(meal));
+            Console.WriteLine("--------------------------------");
+        }
 
+        public void MealsView()
+        {
+            Console.Clear();
+            if (!_mealService.Items.Any())
+            {
+                Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
+            }
+            foreach (var meal in _mealService.Items)
+            {
+                MealView(meal);
+            }
+            CalorificWholeDayView();
+            Console.WriteLine("Wcisnij dowolny przycisk w celu powrotu do głównego menu.");
+            Console.ReadKey();
+        }
 
-
+        public void CalorificWholeDayView()
+        {
+            int calorificWholeDay = 0;
+            double carbosDay = 0, fatsDay = 0, proteinsDay = 0;
+            foreach (var meal in _mealService.Items)
+            {
+                calorificWholeDay += _mealService.CalculateCalorific(meal);
+                carbosDay += _mealService.CalculateCarbos(meal);
+                fatsDay += _mealService.CalculateFats(meal);
+                proteinsDay += _mealService.CalculateProteins(meal);
+            }
+            Console.WriteLine("\n--------------------------------");
+            Console.WriteLine("Podsumowanie dnia");
+            Console.WriteLine($"Kalorczyność całego dnia - {calorificWholeDay}");
+            Console.WriteLine($"Zawartość węglowodanów - {carbosDay}");
+            Console.WriteLine($"Zawartość białka - {proteinsDay}");
+            Console.WriteLine($"Zawartość tłuszczy - {fatsDay}");
+            Console.WriteLine("--------------------------------");
+        }
 
     }
 }

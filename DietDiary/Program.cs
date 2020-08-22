@@ -45,7 +45,7 @@ namespace DietDiary
                         mealManager.RemoveMeal();
                         break;
                     case '5':
-                        mealService.MealsView();
+                        mealManager.MealsView();
                         break;
                     case '6':
                         bodyManager.UpdateBodyMesurements();
