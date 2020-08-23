@@ -162,7 +162,7 @@ namespace DietDiary.App.Managers
             Console.ReadKey();
         }
 
-        public void CalorificWholeDayView()
+        public int CalorificWholeDayView()
         {
             int calorificWholeDay = 0;
             double carbosDay = 0, fatsDay = 0, proteinsDay = 0;
@@ -180,6 +180,7 @@ namespace DietDiary.App.Managers
             Console.WriteLine($"Zawartość białka - {proteinsDay}");
             Console.WriteLine($"Zawartość tłuszczy - {fatsDay}");
             Console.WriteLine("--------------------------------");
+            return calorificWholeDay;
         }
 
     }

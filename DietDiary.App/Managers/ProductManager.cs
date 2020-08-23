@@ -47,7 +47,8 @@ namespace DietDiary.App.Managers
                         var id = AddNewProduct();
                         break;
                     case '3':
-                        RemoveItemById();
+                        var idToRemove = RemoveItemByIdView();
+                        RemoveItemById(idToRemove);
                         break;
                     default:
                         break;
@@ -61,7 +62,7 @@ namespace DietDiary.App.Managers
             Console.WriteLine();
             for (int i = 0; i < productsView.Count; i++)
                 Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-
+          
             var category = Console.ReadKey();
             int numberOfCate, calorific;
             double carbos, fats, proteins;
@@ -127,7 +128,7 @@ namespace DietDiary.App.Managers
             }  
         }
 
-        public void RemoveItemById()
+        public int RemoveItemByIdView()
         {
             Console.Clear();
             int id;
@@ -135,6 +136,12 @@ namespace DietDiary.App.Managers
             ItemsView(false);
             var tempId = Console.ReadLine();
             Int32.TryParse(tempId, out id);
+            return id;
+        }
+
+
+        public void RemoveItemById(int id)
+        {
             var item = _productService.GetItemById(id);
             if (item != null)
             {
@@ -144,7 +151,6 @@ namespace DietDiary.App.Managers
             {
                 Console.WriteLine("Nie ma takiego produktu");
             }
-
         }
     }
 }

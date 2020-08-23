@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DietDiary", "DietDiary\DietDiary.csproj", "{F8977855-CBC4-4702-A132-E4F8A4CF9088}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DietDiary.App", "DietDiary.App\DietDiary.App.csproj", "{8617C6A6-41B6-46B4-9CB2-6AA7A842D1D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DietDiary.App", "DietDiary.App\DietDiary.App.csproj", "{8617C6A6-41B6-46B4-9CB2-6AA7A842D1D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DietDiary.Domain", "DietDiary.Domain\DietDiary.Domain.csproj", "{392FB76D-5616-49FD-9166-38B1C4287FB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DietDiary.Domain", "DietDiary.Domain\DietDiary.Domain.csproj", "{392FB76D-5616-49FD-9166-38B1C4287FB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DietDiary.Tests", "DietDiary.Tests\DietDiary.Tests.csproj", "{33BFE626-847E-4F9A-B19F-0E4AFD550E21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{392FB76D-5616-49FD-9166-38B1C4287FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{392FB76D-5616-49FD-9166-38B1C4287FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{392FB76D-5616-49FD-9166-38B1C4287FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33BFE626-847E-4F9A-B19F-0E4AFD550E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BFE626-847E-4F9A-B19F-0E4AFD550E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BFE626-847E-4F9A-B19F-0E4AFD550E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BFE626-847E-4F9A-B19F-0E4AFD550E21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
