@@ -43,10 +43,10 @@ namespace DietDiary.App.Concrete
             AddItem(new MenuAction(5, "Zaktualizuj dane o produkcie", "ProductsMenu"));
             AddItem(new MenuAction(6, "Usuń produkt", "ProductsMenu"));
 
-            AddItem(new MenuAction(0, "Powrót do menu listy porduktów", "ProductsCategory"));
+            //AddItem(new MenuAction(0, "Powrót do menu listy produktów", "ProductsCategory"));
             for (int i = 1; i < 6; i++)
             {
-                AddItem(new MenuAction(i, ((NameOfMeal)i).ToString(), "ProductsCategory"));
+                AddItem(new MenuAction(i, ((CategoryOfProducts)i).ToString(), "ProductsCategory"));
             }
 
             AddItem(new MenuAction(0, "Powrót do głównego menu", "AddNewMealMenu"));

@@ -56,11 +56,19 @@ namespace DietDiary.App.Managers
                         break;
                     case '5':
                         var productToUpdate = ProductDetailView();
-                        AskUserAboutCalorificProductView(productToUpdate);
+                        if(productToUpdate != null)
+                        {
+                            AskUserAboutCalorificProductView(productToUpdate);
+                        }
+                        GoToMenuView();
                         break;
                     case '6':
                         var idToRemove = ChoseItemView();
-                        RemoveItemById(idToRemove);
+                        if(idToRemove != 0)
+                        {
+                            RemoveItemById(idToRemove);
+                        }                  
+                        GoToMenuView();
                         break;
                     default:
                         break;
@@ -84,10 +92,11 @@ namespace DietDiary.App.Managers
         private int AddNewProduct()
         {
             var id = _productService.GetLastId();
-            Product productToAdd = new Product() { Id = id };
-            AskUserAboutCalorificProductView(productToAdd);
+            Product productToAdd = new Product() { Id = id+1 };
             var category = ChoseCategoryOfProductView();
+            if(category == 0) { return 0; }
             productToAdd.Category = category;
+            AskUserAboutCalorificProductView(productToAdd);
             _productService.AddItem(productToAdd);
 
             return productToAdd.Id;
@@ -95,6 +104,7 @@ namespace DietDiary.App.Managers
 
         private Product AskUserAboutCalorificProductView(Product product)
         {
+            Console.Clear();
             int calorific;
             double carbos, fats, proteins;
             Console.WriteLine("\nWprowadź nazwę produktu: ");
@@ -128,13 +138,16 @@ namespace DietDiary.App.Managers
         {
             var idToDetail = ChoseItemView();
             var itemToShow = _productService.GetItemById(idToDetail);
-            _productService.ProductDetails(itemToShow);
+            if(itemToShow != null)
+            {
+                _productService.ProductDetails(itemToShow);
+            }
             return itemToShow;
         }
 
         private void ItemsView(int category)
         {
-
+            Console.Clear();
             List<Product> products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
             if (products.Any())
             {
@@ -142,23 +155,14 @@ namespace DietDiary.App.Managers
                 {
                     Console.WriteLine($"{product.Id}. {product.Name}");
                 }
-                /* Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                 Console.ReadKey();*/
             }
             else
             {
                 Console.WriteLine($"\nAktualnie brak produktów z danej kateogrii - dodaj produkt do bazy.");
-                /* Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                 Console.ReadKey();*/
             }
         }
 
-        private void GoToMenuView()
-        {
-            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-            Console.ReadKey();
-        }
-        private void ItemsView(bool viewInMenu)
+        private bool ItemsView(bool viewInMenu)
         {
             if (viewInMenu)
             {
@@ -171,34 +175,32 @@ namespace DietDiary.App.Managers
                 {
                     Console.WriteLine($"{product.Id}. {product.Name}");
                 }
-                /* if (viewInMenu)
-                 {
-                     Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                     Console.ReadKey();
-                 } */
             }
             else
             {
                 Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
-                /*  Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                  Console.ReadKey();*/
+                return false;
             }
+            return true;
         }
 
         private int ChoseItemView()
         {
             Console.Clear();
-            int id;
+            int id = 0;
             Console.WriteLine("Wybierz produkt z listy: ");
-            ItemsView(false);
-            var tempId = Console.ReadLine();
-            Int32.TryParse(tempId, out id);
+            if (ItemsView(false))
+            {
+                var tempId = Console.ReadLine();
+                Int32.TryParse(tempId, out id);
+            }
             return id;
         }
 
         private int ChoseCategoryOfProductView()
         {
             Console.Clear();
+            Console.WriteLine("Wybierz kategorie");
             int category;
             var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
             Console.WriteLine();
@@ -206,9 +208,18 @@ namespace DietDiary.App.Managers
                 Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
             while (!Int32.TryParse(Console.ReadKey().KeyChar.ToString(), out category))
             {
-                Console.WriteLine("Podaj kalorie w postaci liczby całkowitej");
+                Console.WriteLine("Wybierz kategorie ponownie");
+            }
+            if(!(new[] { 1, 2, 3, 4, 5 }.Contains(category)))
+            {
+                return 0;
             }
             return category;
+        }
+        private void GoToMenuView()
+        {
+            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+            Console.ReadKey();
         }
     }
 }

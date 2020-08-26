@@ -12,11 +12,11 @@ namespace DietDiary.App.Concrete
 
         public void ProductDetails(Product product)
         {
-            Console.WriteLine($"Nazwa - {product.Name}");
+            Console.WriteLine($"\nNazwa - {product.Name}");
             Console.WriteLine($"Kaloryczność w 100 gramach - {product.Calorific}");
             Console.WriteLine($"Węglowodany w 100 gramach - {product.Carbos}");
             Console.WriteLine($"Białko w 100 gramach - {product.Proteins}");
-            Console.WriteLine($"Tłuszcze w 100 gramach - {product.Fats}");
+            Console.WriteLine($"Tłuszcze w 100 gramach - {product.Fats}\n");
         }
 
         public Product UpdateNutrionalValues(Product product, int calorific, double carbos, double proteins, double fats)
