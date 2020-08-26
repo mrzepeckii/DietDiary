@@ -9,6 +9,24 @@ namespace DietDiary.App.Concrete
 {
     public class ProductService : BaseService<Product>
     {
+
+        public void ProductDetails(Product product)
+        {
+            Console.WriteLine($"Nazwa - {product.Name}");
+            Console.WriteLine($"Kaloryczność w 100 gramach - {product.Calorific}");
+            Console.WriteLine($"Węglowodany w 100 gramach - {product.Carbos}");
+            Console.WriteLine($"Białko w 100 gramach - {product.Proteins}");
+            Console.WriteLine($"Tłuszcze w 100 gramach - {product.Fats}");
+        }
+
+        public Product UpdateNutrionalValues(Product product, int calorific, double carbos, double proteins, double fats)
+        {
+            product.Calorific = calorific;
+            product.Carbos = carbos;
+            product.Proteins = proteins;
+            product.Fats = fats;
+            return product;
+        }
       //  public List<Product> Products;
 
       /*  public ProductService()
