@@ -27,12 +27,13 @@ namespace DietDiary.App.Concrete
             product.Fats = fats;
             return product;
         }
-      //  public List<Product> Products;
 
-      /*  public ProductService()
-        {
-            Products = new List<Product>();
-        }*/
+        //  public List<Product> Products;
+
+        /*  public ProductService()
+          {
+              Products = new List<Product>();
+          }*/
 
         /*public ConsoleKeyInfo ProductsView(MenuActionService actionService)
         {
@@ -45,56 +46,56 @@ namespace DietDiary.App.Concrete
             return chosenOption;
         }*/
 
-     /*   public int AddNewProduct(int category, int calorific, string name, double proteins, double carbos, double fats)
-        {
-            Product product = new Product
-            {
-                Id = Products.Count + 1,
-                Category = category,
-                Calorific = calorific,
-                Name = name,
-                Proteins = proteins,
-                Carbos = carbos,
-                Fats = fats
-            };
-            Products.Add(product);
-            return product.Id;
-        }*/
+        /*   public int AddNewProduct(int category, int calorific, string name, double proteins, double carbos, double fats)
+           {
+               Product product = new Product
+               {
+                   Id = Products.Count + 1,
+                   Category = category,
+                   Calorific = calorific,
+                   Name = name,
+                   Proteins = proteins,
+                   Carbos = carbos,
+                   Fats = fats
+               };
+               Products.Add(product);
+               return product.Id;
+           }*/
 
-     /*   public Product FindProductById(int productId)
-        {
-            Product tempProduct = new Product();
-            foreach (var item in Products)
-                if (item.Id == productId)
-                {
-                    tempProduct = item;
-                    break;
-                }       
-            return tempProduct;
-        }*/
+        /*   public Product FindProductById(int productId)
+           {
+               Product tempProduct = new Product();
+               foreach (var item in Products)
+                   if (item.Id == productId)
+                   {
+                       tempProduct = item;
+                       break;
+                   }       
+               return tempProduct;
+           }*/
 
-       /* public Product FindProductByName(string name)
-        {
-            Product tempProduct = new Product();
-            foreach (var item in Products)
-                if (item.Name == name)
-                    tempProduct = item;
-            return tempProduct;
-        }*/
+        /* public Product FindProductByName(string name)
+         {
+             Product tempProduct = new Product();
+             foreach (var item in Products)
+                 if (item.Name == name)
+                     tempProduct = item;
+             return tempProduct;
+         }*/
 
-      /*  public void ListOfProductsView(char productCategory)
-        {
-            int productCategoryId;
-            Int32.TryParse(productCategory.ToString(), out productCategoryId);
-            foreach (var item in Products)
-                if(item.Category == productCategoryId)
-                        Console.WriteLine($"\n{item.Name}");
-        }*/
+        /*  public void ListOfProductsView(char productCategory)
+          {
+              int productCategoryId;
+              Int32.TryParse(productCategory.ToString(), out productCategoryId);
+              foreach (var item in Products)
+                  if(item.Category == productCategoryId)
+                          Console.WriteLine($"\n{item.Name}");
+          }*/
 
-     /*   public void ListOfProductsView()
-        {
-            foreach (var item in Products)
-                    Console.WriteLine($"\n{item.Id}.{item.Name}");
-        }*/
+        /*   public void ListOfProductsView()
+           {
+               foreach (var item in Products)
+                       Console.WriteLine($"\n{item.Id}.{item.Name}");
+           }*/
     }
 }

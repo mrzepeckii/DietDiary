@@ -48,13 +48,15 @@ namespace DietDiary.App.Managers
                         GoToMenuView();
                         break;
                     case '3':
-                        var idToDetail = ChoseItemView();
-                        var itemToShow = _productService.GetItemById(idToDetail);
-                        _productService.ProductDetails(itemToShow);
+                        ProductDetailView();
                         GoToMenuView();
                         break;
                     case '4':
                         var id = AddNewProduct();
+                        break;
+                    case '5':
+                        var productToUpdate = ProductDetailView();
+                        AskUserAboutCalorificProductView(productToUpdate);
                         break;
                     case '6':
                         var idToRemove = ChoseItemView();
@@ -65,83 +67,6 @@ namespace DietDiary.App.Managers
                 }
             }
         }
-        private int AddNewProduct()
-        {
-            var productToAdd = AskUserAboutCalorificProductView();
-            var category = ChoseCategoryOfProductView();
-            productToAdd.Category = category;
-            var id = _productService.GetLastId();
-            _productService.AddItem(productToAdd);
-
-            return productToAdd.Id;
-        }
-
-
-
-        private void ItemsView(int category)
-        {
-           
-            List<Product> products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
-            if (products.Any())
-            {
-                foreach (var product in products)
-                {
-                    Console.WriteLine($"{product.Id}. {product.Name}");
-                }
-                   /* Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                    Console.ReadKey();*/
-            }
-            else
-            {
-                Console.WriteLine($"\nAktualnie brak produktów z danej kateogrii - dodaj produkt do bazy.");
-               /* Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                Console.ReadKey();*/
-            }
-        }
-
-        private void GoToMenuView()
-        {
-            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-            Console.ReadKey();
-        }
-        private void ItemsView(bool viewInMenu)
-        {
-            if (viewInMenu)
-            {
-                Console.Clear();
-            }
-            List<Product> products = _productService.GetAllItems();
-            if (products.Any())
-            {
-                foreach (var product in products)
-                {
-                    Console.WriteLine($"{product.Id}. {product.Name}");
-                }
-               /* if (viewInMenu)
-                {
-                    Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                    Console.ReadKey();
-                } */
-            }
-            else
-            {
-                Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
-              /*  Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                Console.ReadKey();*/
-            }  
-        }
-
-        private int ChoseItemView()
-        {
-            Console.Clear();
-            int id;
-            Console.WriteLine("Wybierz produkt z listy: ");
-            ItemsView(false);
-            var tempId = Console.ReadLine();
-            Int32.TryParse(tempId, out id);
-            return id;
-        }
-
 
         public void RemoveItemById(int id)
         {
@@ -156,22 +81,19 @@ namespace DietDiary.App.Managers
             }
         }
 
-        private int ChoseCategoryOfProductView()
+        private int AddNewProduct()
         {
-            Console.Clear();
-            int category;
-            var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
-            Console.WriteLine();
-            for (int i = 0; i < productsView.Count; i++)
-                Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-            while (!Int32.TryParse(Console.ReadKey().KeyChar.ToString(), out category))
-            {
-                Console.WriteLine("Podaj kalorie w postaci liczby całkowitej");
-            }
-            return category;
+            var id = _productService.GetLastId();
+            Product productToAdd = new Product() { Id = id };
+            AskUserAboutCalorificProductView(productToAdd);
+            var category = ChoseCategoryOfProductView();
+            productToAdd.Category = category;
+            _productService.AddItem(productToAdd);
+
+            return productToAdd.Id;
         }
 
-        private Product AskUserAboutCalorificProductView()
+        private Product AskUserAboutCalorificProductView(Product product)
         {
             int calorific;
             double carbos, fats, proteins;
@@ -197,11 +119,96 @@ namespace DietDiary.App.Managers
             {
                 Console.WriteLine("Podaj zawartość w postaci liczby");
             }
-            Product product = new Product { Name = nameOfProduct };
+            product.Name = nameOfProduct;
             _productService.UpdateNutrionalValues(product, calorific, carbos, proteins, fats);
             return product;
         }
 
+        private Product ProductDetailView()
+        {
+            var idToDetail = ChoseItemView();
+            var itemToShow = _productService.GetItemById(idToDetail);
+            _productService.ProductDetails(itemToShow);
+            return itemToShow;
+        }
 
+        private void ItemsView(int category)
+        {
+
+            List<Product> products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
+            if (products.Any())
+            {
+                foreach (var product in products)
+                {
+                    Console.WriteLine($"{product.Id}. {product.Name}");
+                }
+                /* Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                 Console.ReadKey();*/
+            }
+            else
+            {
+                Console.WriteLine($"\nAktualnie brak produktów z danej kateogrii - dodaj produkt do bazy.");
+                /* Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                 Console.ReadKey();*/
+            }
+        }
+
+        private void GoToMenuView()
+        {
+            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+            Console.ReadKey();
+        }
+        private void ItemsView(bool viewInMenu)
+        {
+            if (viewInMenu)
+            {
+                Console.Clear();
+            }
+            List<Product> products = _productService.GetAllItems();
+            if (products.Any())
+            {
+                foreach (var product in products)
+                {
+                    Console.WriteLine($"{product.Id}. {product.Name}");
+                }
+                /* if (viewInMenu)
+                 {
+                     Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                     Console.ReadKey();
+                 } */
+            }
+            else
+            {
+                Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
+                /*  Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+                  Console.ReadKey();*/
+            }
+        }
+
+        private int ChoseItemView()
+        {
+            Console.Clear();
+            int id;
+            Console.WriteLine("Wybierz produkt z listy: ");
+            ItemsView(false);
+            var tempId = Console.ReadLine();
+            Int32.TryParse(tempId, out id);
+            return id;
+        }
+
+        private int ChoseCategoryOfProductView()
+        {
+            Console.Clear();
+            int category;
+            var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
+            Console.WriteLine();
+            for (int i = 0; i < productsView.Count; i++)
+                Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
+            while (!Int32.TryParse(Console.ReadKey().KeyChar.ToString(), out category))
+            {
+                Console.WriteLine("Podaj kalorie w postaci liczby całkowitej");
+            }
+            return category;
+        }
     }
 }
