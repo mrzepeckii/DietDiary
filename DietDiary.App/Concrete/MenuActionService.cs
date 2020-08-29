@@ -50,6 +50,7 @@ namespace DietDiary.App.Concrete
             AddItem(new MenuAction(4, "Dodaj posiłek", "MealsMenu"));
             AddItem(new MenuAction(5, "Zaktualizuj posiłek", "MealsMenu"));
             AddItem(new MenuAction(6, "Usuń posiłek", "MealsMenu"));
+            AddItem(new MenuAction(7, "Usuń posiłek z bazy", "MealsMenu"));
 
             //AddItem(new MenuAction(0, "Powrót do menu listy produktów", "ProductsCategory"));
             for (int i = 1; i < 6; i++)

@@ -11,13 +11,13 @@ namespace DietDiary.App.Managers
 {
     public class MealManager
     {
-        //Podzielic na mniesze metody 
-        //dodaj posilek
-        //usun posilek
-        //zakutalizuj posilek
-        //wyswietl posilek z danego dnia
-        //wyswietl kalorycznosc z calego dnia 
-        //
+        //Podzielic na mniesze metody  -- DONE 
+        //dodaj posilek -- DONE 
+        //usun posilek --DONE FORM BASE, HAVE TO ADD METHOD TO REMOVE FORM DAY 
+        //zakutalizuj posilek -- TO DO 
+        //wyswietl posilek z danego dnia -- DONE 
+        //wyswietl kalorycznosc z calego dnia -- MAYBE CREATE METHOD IN DAYSERVICE TO SHOW ACTUALL CALORIFIC AND MACRO 
+        //AND THEN IN MAIN MENU ADD _DAYSERVICE.METHODTOSHOW() EVERYTIME WHEN MAIN MENU 
 
         private readonly MenuActionService _actionService;
         private readonly MealService _mealService;
@@ -63,7 +63,8 @@ namespace DietDiary.App.Managers
                         }
                         break;
                     case '3':
-                        MealsView();
+                        var chosenMeal = ChoseMealView();
+                        DetailMealView(chosenMeal);
                         break;
                     case '4':
                         var dayAddMeal = _dayService.ChoseDayView();
@@ -72,7 +73,11 @@ namespace DietDiary.App.Managers
                     case '5':
                         break;
                     case '6':
-                        RemoveMeal();
+                        var dayRemoveMeal = _dayService.ChoseDayView();
+                        RemoveMealFromDay(dayRemoveMeal);
+                        break;
+                    case '7':
+                        RemoveMealFromBase();
                         break;
                     default:
                         break;
@@ -81,6 +86,13 @@ namespace DietDiary.App.Managers
            
 
 
+        }
+
+        private string AskAboutName()
+        {
+            Console.WriteLine("\nWprowadź nazwę posiłku:");
+            string name = Console.ReadLine();
+            return name;
         }
 
         private int ChoseCategoryView()
@@ -156,6 +168,22 @@ namespace DietDiary.App.Managers
             Console.ReadKey();
         }
 
+        private Meal ChoseMealView()
+        {
+            int id;
+            Console.WriteLine("\nWybierz posiłek z listy:");
+            _mealService.Items.ForEach(m => MealView(m));
+            var tempId = Console.ReadLine();
+            Int32.TryParse(tempId, out id);
+            Meal chosenMeal = _mealService.GetItemById(id);
+            return chosenMeal;
+        }
+
+        private void MealView(Meal meal)
+        {
+            Console.WriteLine($"{meal.Id}. {meal.Name}");
+        }
+
         private int AddNewMeal(Day day)
         {
             Console.Clear();
@@ -166,11 +194,12 @@ namespace DietDiary.App.Managers
             {
                 return 0;
             }
+            string name = AskAboutName();
             var id = _mealService.GetLastId();
-            Meal meal = new Meal() { Id = id +1, Category = mealCategory, products = mealProducts};
+            Meal meal = new Meal() { Id = id +1, Category = mealCategory, products = mealProducts, Name = name};
             
             _mealService.AddItem(meal);
-            MealView(meal);
+            DetailMealView(meal);
             GoToMenuView();
             return meal.Id;
         }
@@ -197,7 +226,7 @@ namespace DietDiary.App.Managers
                 }
                 isMealChosen = true;
             } while (!isMealChosen);
-            MealView(mealToRemove);
+            DetailMealView(mealToRemove);
             Console.WriteLine("Czy na pewno chcesz usunąć ten posiłek?");
             Console.WriteLine("1 - Tak \n2 - Nie");
             int.TryParse(Console.ReadKey().KeyChar.ToString(), out decision);
@@ -208,20 +237,35 @@ namespace DietDiary.App.Managers
             return mealToRemove;
         }
 
-        private void RemoveMeal()
+        private void RemoveMealFromDay(Day day)
         {
             Console.Clear();
-            if (!_mealService.GetAllItems().Any())
+            if (!day.MealsInDay.Any())
             {
-                Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
+                Console.WriteLine("\nAktualnie brak posiłków dla danego dnia - dodaj posiłek");
                 GoToMenuView();
                 return;
             }
             Meal mealToRemove = AskUserAboutMealToRemove();
+            
             _mealService.RemoveItem(mealToRemove);
         }
 
-        private void MealView(Meal meal)
+        private void RemoveMealFromBase()
+        {
+            Console.Clear();
+            if (!_mealService.GetAllItems().Any())
+            {
+                Console.WriteLine("\nAktualnie brak posiłków w bazie - dodaj posiłek");
+                GoToMenuView();
+                return;
+            }
+            Meal mealToRemove = AskUserAboutMealToRemove();
+
+            _mealService.RemoveItem(mealToRemove);
+        }
+
+        private void DetailMealView(Meal meal)
         {
             Console.WriteLine("\n--------------------------------");
             Console.WriteLine((NameOfMeal)meal.Category);
@@ -266,8 +310,10 @@ namespace DietDiary.App.Managers
                 GoToMenuView();
                 return;
             }
-            meals.ForEach(m => MealView(m));
+            meals.Where(m => m.Category == category).ToList().ForEach(m => MealView(m));
         }
+
+
 
         public void CalorificWholeDayView(Day day)
         {

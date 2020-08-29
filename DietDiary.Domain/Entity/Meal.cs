@@ -8,6 +8,7 @@ namespace DietDiary.Domain.Entity
     public class Meal : BaseEntity
     {
         public List<Product> products;
+        public string Name { get; set; }
 
     }
     

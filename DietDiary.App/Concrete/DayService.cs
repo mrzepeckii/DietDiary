@@ -40,6 +40,11 @@ namespace DietDiary.App.Concrete
             return chosenDay;
         }
 
+        public Meal GetMealFromDayById(Day day, int id)
+        {
+           Meal meal = day.MealsInDay.FirstOrDefault(m => m.Id == id);
+            return meal;
+        }
         public Day ChoseDayView()
         {
             DateTime dateTime;

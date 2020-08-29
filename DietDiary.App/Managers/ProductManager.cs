@@ -223,6 +223,7 @@ namespace DietDiary.App.Managers
             }
             return category;
         }
+
         private void GoToMenuView()
         {
             Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
