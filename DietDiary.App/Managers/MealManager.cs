@@ -21,6 +21,7 @@ namespace DietDiary.App.Managers
 
         private readonly MenuActionService _actionService;
         private readonly MealService _mealService;
+        private readonly DayService _dayService;
         private IService<Product> _productService;
 
         public MealManager(MenuActionService actionService, MealService mealService, IService<Product> productService)
@@ -54,6 +55,7 @@ namespace DietDiary.App.Managers
                         MealsView();
                         break;
                     case '2':
+                        var day = ChoseDayView();
                         break;
                     case '3':
                         break;
@@ -147,7 +149,7 @@ namespace DietDiary.App.Managers
             Console.ReadKey();
         }
 
-        private int AddNewMeal()
+        private int AddNewMeal(Day day)
         {
             Console.Clear();
             int mealCategory = ChoseCategoryView();
@@ -159,6 +161,7 @@ namespace DietDiary.App.Managers
             }
             var id = _mealService.GetLastId();
             Meal meal = new Meal() { Id = id +1, Category = mealCategory, products = mealProducts};
+            
             _mealService.AddItem(meal);
             MealView(meal);
             GoToMenuView();
@@ -240,29 +243,33 @@ namespace DietDiary.App.Managers
                 _mealService.Items.ForEach(MealView);
               //  MealView(meal);
           //  }
-            CalorificWholeDayView();
             GoToMenuView();
         }
 
-        public int CalorificWholeDayView()
+        private Day ChoseDayView()
         {
-            int calorificWholeDay = 0;
-            double carbosDay = 0, fatsDay = 0, proteinsDay = 0;
-            foreach (var meal in _mealService.Items)
+            DateTime dateTime;
+            Day chosenDay;
+            Console.WriteLine("\nProszę wpisać datę:");
+            DateTime.TryParse(Console.ReadLine(), out dateTime);
+            chosenDay = _dayService.GetDayByDate(dateTime);
+            if(chosenDay == null)
             {
-                calorificWholeDay += _mealService.CalculateCalorific(meal);
-                carbosDay += _mealService.CalculateCarbos(meal);
-                fatsDay += _mealService.CalculateFats(meal);
-                proteinsDay += _mealService.CalculateProteins(meal);
+                Console.WriteLine("Brak wyników z bazy - w tym dniu nie dodano żadnego posiłku");
             }
+            return chosenDay;
+
+        }
+
+        public void CalorificWholeDayView(Day day)
+        {
             Console.WriteLine("\n--------------------------------");
-            Console.WriteLine("Podsumowanie dnia");
-            Console.WriteLine($"Kalorczyność całego dnia - {calorificWholeDay}");
-            Console.WriteLine($"Zawartość węglowodanów - {carbosDay}");
-            Console.WriteLine($"Zawartość białka - {proteinsDay}");
-            Console.WriteLine($"Zawartość tłuszczy - {fatsDay}");
+            Console.WriteLine($"Podsumowanie dnia{day.Date}");
+            Console.WriteLine($"Kalorczyność całego dnia - {_dayService.CalculateCalorificWholeDay(day)}");
+            Console.WriteLine($"Zawartość węglowodanów - {_dayService.CalculateCarbosWholeDay(day)}");
+            Console.WriteLine($"Zawartość białka - {_dayService.CalculateProteinsWholeDay(day)}");
+            Console.WriteLine($"Zawartość tłuszczy - {_dayService.CalculateFatsWholeDay(day)}");
             Console.WriteLine("--------------------------------");
-            return calorificWholeDay;
         }
 
     }

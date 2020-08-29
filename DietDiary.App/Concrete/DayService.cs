@@ -34,7 +34,11 @@ namespace DietDiary.App.Concrete
             return fatsDay;
         }
 
-
+        public Day GetDayByDate(DateTime date)
+        {
+            Day chosenDay = Items.FirstOrDefault(d => d.Date == date);
+            return chosenDay;
+        }
 
     }
 }
