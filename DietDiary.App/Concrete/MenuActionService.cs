@@ -45,7 +45,7 @@ namespace DietDiary.App.Concrete
 
             AddItem(new MenuAction(0, "Powrót do głównego menu", "MealsMenu"));
             AddItem(new MenuAction(1, "Wyświetl wszystkie posiłki z danego dnia", "MealsMenu"));
-            AddItem(new MenuAction(2, "Wyświetl ostatnie posiłki z danej kateogrii", "MealsMenu"));
+            AddItem(new MenuAction(2, "Wyświetl wszystkie posiłki z danej kateogrii", "MealsMenu"));
             AddItem(new MenuAction(3, "Pokaż szczegółowe dane o danym posiłku", "MealsMenu"));
             AddItem(new MenuAction(4, "Dodaj posiłek", "MealsMenu"));
             AddItem(new MenuAction(5, "Zaktualizuj posiłek", "MealsMenu"));

@@ -52,10 +52,15 @@ namespace DietDiary.App.Managers
                 switch (chosenOption.KeyChar)
                 {
                     case '1':
-                        MealsView();
+                        var day = _dayService.ChoseDayView();
+                        MealsView(day);
                         break;
                     case '2':
-                        var day = _dayService.ChoseDayView();
+                        var category = ChoseCategoryView();
+                        if(category != 0)
+                        {
+                            MealsView(category);
+                        }
                         break;
                     case '3':
                         MealsView();
@@ -236,9 +241,11 @@ namespace DietDiary.App.Managers
         private void MealsView(Day day)
         {
             Console.Clear();
-            if (!_mealService.Items.Any())
+            if (!day.MealsInDay.Any())
             {
-                Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
+                Console.WriteLine("\nAktualnie brak posiłków dla wybranego dnia - dodaj posiłek");
+                GoToMenuView();
+                return;
             }
             //   foreach (var meal in _mealService.Items)
             // {
@@ -247,6 +254,19 @@ namespace DietDiary.App.Managers
               //  MealView(meal);
           //  }
             GoToMenuView();
+        }
+
+        private void MealsView(int category)
+        {
+            var meals = _mealService.GetAllItems();
+            Console.Clear();
+            if (!meals.Any())
+            {
+                Console.WriteLine("\nAktualnie brak posiłków w bazie - dodaj posiłek");
+                GoToMenuView();
+                return;
+            }
+            meals.ForEach(m => MealView(m));
         }
 
         public void CalorificWholeDayView(Day day)
