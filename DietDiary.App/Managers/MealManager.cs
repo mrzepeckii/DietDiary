@@ -55,12 +55,14 @@ namespace DietDiary.App.Managers
                         MealsView();
                         break;
                     case '2':
-                        var day = ChoseDayView();
+                        var day = _dayService.ChoseDayView();
                         break;
                     case '3':
+                        MealsView();
                         break;
                     case '4':
-                        var idAdd = AddNewMeal();
+                        var dayAddMeal = _dayService.ChoseDayView();
+                        var idAdd = AddNewMeal(dayAddMeal);
                         break;
                     case '5':
                         break;
@@ -231,34 +233,20 @@ namespace DietDiary.App.Managers
             Console.WriteLine("--------------------------------");
         }
 
-        private void MealsView()
+        private void MealsView(Day day)
         {
             Console.Clear();
             if (!_mealService.Items.Any())
             {
                 Console.WriteLine("\nAktualnie brak posiłków - dodaj posiłek");
             }
-         //   foreach (var meal in _mealService.Items)
-           // {
-                _mealService.Items.ForEach(MealView);
+            //   foreach (var meal in _mealService.Items)
+            // {
+            day.MealsInDay.ToList().ForEach(m => MealView(m));
+               // _mealService.Items.ForEach(MealView);
               //  MealView(meal);
           //  }
             GoToMenuView();
-        }
-
-        private Day ChoseDayView()
-        {
-            DateTime dateTime;
-            Day chosenDay;
-            Console.WriteLine("\nProszę wpisać datę:");
-            DateTime.TryParse(Console.ReadLine(), out dateTime);
-            chosenDay = _dayService.GetDayByDate(dateTime);
-            if(chosenDay == null)
-            {
-                Console.WriteLine("Brak wyników z bazy - w tym dniu nie dodano żadnego posiłku");
-            }
-            return chosenDay;
-
         }
 
         public void CalorificWholeDayView(Day day)

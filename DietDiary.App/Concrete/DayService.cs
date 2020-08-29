@@ -34,10 +34,25 @@ namespace DietDiary.App.Concrete
             return fatsDay;
         }
 
-        public Day GetDayByDate(DateTime date)
+        private Day GetDayByDate(DateTime date)
         {
             Day chosenDay = Items.FirstOrDefault(d => d.Date == date);
             return chosenDay;
+        }
+
+        public Day ChoseDayView()
+        {
+            DateTime dateTime;
+            Day chosenDay;
+            Console.WriteLine("\nProszę wpisać datę:");
+            DateTime.TryParse(Console.ReadLine(), out dateTime);
+            chosenDay = GetDayByDate(dateTime);
+            if (chosenDay == null)
+            {
+                Console.WriteLine("Brak wyników z bazy - w tym dniu nie dodano żadnego posiłku");
+            }
+            return chosenDay;
+
         }
 
     }
