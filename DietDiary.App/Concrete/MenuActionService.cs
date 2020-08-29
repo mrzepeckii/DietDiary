@@ -43,16 +43,24 @@ namespace DietDiary.App.Concrete
             AddItem(new MenuAction(5, "Zaktualizuj dane o produkcie", "ProductsMenu"));
             AddItem(new MenuAction(6, "Usuń produkt", "ProductsMenu"));
 
+            AddItem(new MenuAction(0, "Powrót do głównego menu", "MealsMenu"));
+            AddItem(new MenuAction(1, "Wyświetl wszystkie posiłki z danego dnia", "MealsMenu"));
+            AddItem(new MenuAction(2, "Wyświetl ostatnie posiłki z danej kateogrii", "MealsMenu"));
+            AddItem(new MenuAction(3, "Pokaż szczegółowe dane o danym posiłku", "MealsMenu"));
+            AddItem(new MenuAction(4, "Dodaj posiłek", "MealsMenu"));
+            AddItem(new MenuAction(5, "Zaktualizuj posiłek", "MealsMenu"));
+            AddItem(new MenuAction(6, "Usuń posiłek", "MealsMenu"));
+
             //AddItem(new MenuAction(0, "Powrót do menu listy produktów", "ProductsCategory"));
             for (int i = 1; i < 6; i++)
             {
                 AddItem(new MenuAction(i, ((CategoryOfProducts)i).ToString(), "ProductsCategory"));
             }
 
-            AddItem(new MenuAction(0, "Powrót do głównego menu", "AddNewMealMenu"));
+            AddItem(new MenuAction(0, "Powrót do głównego menu", "MealsCategory"));
             for (int i = 1; i < 6; i++)
             {
-                AddItem(new MenuAction(i, ((NameOfMeal)i).ToString(), "AddNewMealMenu"));
+                AddItem(new MenuAction(i, ((NameOfMeal)i).ToString(), "MealsCategory"));
             }
 
             AddItem(new MenuAction(0, "Powrót do głównego menu", "BodyMeasurementsMenu"));

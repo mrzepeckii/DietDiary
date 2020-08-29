@@ -27,10 +27,11 @@ namespace DietDiary.App.Managers
                 Console.Clear();
                 var productsView = _actionService.GetMenuActionsByMenuName("ProductsMenu");
                 Console.WriteLine();
-                for (int i = 0; i < productsView.Count; i++)
-                {
-                    Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-                }
+                productsView.ForEach(pV => Console.WriteLine($"{pV.Id}. {pV.Name}"));
+             //   for (int i = 0; i < productsView.Count; i++)
+               // {
+                 //   Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
+                //}
                 var chosenOption = Console.ReadKey();
                 if (chosenOption.KeyChar == '0')
                 {
@@ -151,10 +152,11 @@ namespace DietDiary.App.Managers
             List<Product> products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
             if (products.Any())
             {
-                foreach (var product in products)
-                {
-                    Console.WriteLine($"{product.Id}. {product.Name}");
-                }
+                products.ForEach(p => Console.WriteLine($"{p.Id}. {p.Name}"));
+              //  foreach (var product in products)
+                //{
+                  //  Console.WriteLine($"{product.Id}. {product.Name}");
+                //}
             }
             else
             {
@@ -171,10 +173,7 @@ namespace DietDiary.App.Managers
             List<Product> products = _productService.GetAllItems();
             if (products.Any())
             {
-                foreach (var product in products)
-                {
-                    Console.WriteLine($"{product.Id}. {product.Name}");
-                }
+                products.ForEach(p => Console.WriteLine($"{p.Id}. {p.Name}"));
             }
             else
             {
@@ -204,8 +203,7 @@ namespace DietDiary.App.Managers
             int category;
             var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
             Console.WriteLine();
-            for (int i = 0; i < productsView.Count; i++)
-                Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
+            productsView.ForEach(pV => Console.WriteLine($"{pV.Id}. {pV.Name}"));
             while (!Int32.TryParse(Console.ReadKey().KeyChar.ToString(), out category))
             {
                 Console.WriteLine("Wybierz kategorie ponownie");
