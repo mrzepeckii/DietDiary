@@ -40,12 +40,12 @@ namespace DietDiary.App.Managers
                 switch (chosenOption.KeyChar)
                 {
                     case '1':
-                        ItemsView(true);
+                        ItemsView(null,true);
                         GoToMenuView();
                         break;
                     case '2':
                         var category = ChoseCategoryOfProductView();
-                        ItemsView(category);
+                        ItemsView(category,false);
                         GoToMenuView();
                         break;
                     case '3':
@@ -146,31 +146,40 @@ namespace DietDiary.App.Managers
             return itemToShow;
         }
 
-        private void ItemsView(int category)
+        private bool ItemsView(int? category, bool viewInMenu)
         {
-            Console.Clear();
-            List<Product> products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
+            List<Product> products;
+            if (viewInMenu)
+            {
+                Console.Clear();
+            }
+            if(category != null)
+            {
+               products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
+            }
+            else
+            {
+                products = _productService.GetAllItems();
+            }
             if (products.Any())
             {
                 products.ForEach(p => Console.WriteLine($"{p.Id}. {p.Name}"));
-              //  foreach (var product in products)
-                //{
-                  //  Console.WriteLine($"{product.Id}. {product.Name}");
-                //}
             }
             else
             {
                 Console.WriteLine($"\nAktualnie brak produktów z danej kateogrii - dodaj produkt do bazy.");
+                return false;
             }
+            return true;
         }
 
-        private bool ItemsView(bool viewInMenu)
+      /*  private bool ItemsView(bool viewInMenu)
         {
             if (viewInMenu)
             {
                 Console.Clear();
             }
-            List<Product> products = _productService.GetAllItems();
+           
             if (products.Any())
             {
                 products.ForEach(p => Console.WriteLine($"{p.Id}. {p.Name}"));
@@ -181,14 +190,14 @@ namespace DietDiary.App.Managers
                 return false;
             }
             return true;
-        }
+        }*/
 
         private int ChoseItemView()
         {
             Console.Clear();
             int id = 0;
             Console.WriteLine("Wybierz produkt z listy: ");
-            if (ItemsView(false))
+            if (ItemsView(null,false))
             {
                 var tempId = Console.ReadLine();
                 Int32.TryParse(tempId, out id);

@@ -10,11 +10,31 @@ namespace DietDiary.App.Concrete
     public class DayService : BaseService<Day>
     {
         private readonly MealService _mealService;
-        public int CalculateCalorific(IEnumerable<Meal> meals)
+        public int CalculateCalorificWholeDay(Day day)
         {
-            meals.ToList().ForEach(m => _mealService.CalculateCalorific(m));
-
+            int calorificWholeDay = day.MealsInDay.Sum(m => _mealService.CalculateCalorific(m));
+            return calorificWholeDay;
         }
+
+        public double CalculateCarbosWholeDay(Day day)
+        {
+            double carbosDay = day.MealsInDay.Sum(m => _mealService.CalculateCarbos(m));
+            return carbosDay;
+        }
+        public double CalculateProteinsWholeDay(Day day)
+        {
+            double proteinsDay = day.MealsInDay.Sum(m => _mealService.CalculateProteins(m));
+            return proteinsDay;
+        }
+
+        public double CalculateFatsWholeDay(Day day)
+        {
+
+            double fatsDay = day.MealsInDay.Sum(m => _mealService.CalculateFats(m));
+            return fatsDay;
+        }
+
+
 
     }
 }

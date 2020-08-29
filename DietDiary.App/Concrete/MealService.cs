@@ -12,39 +12,23 @@ namespace DietDiary.App.Concrete
     {
         public int CalculateCalorific(Meal meal)
         {
-            int calorific = 0;
-            foreach (var product in meal.products)
-            {
-                calorific += product.Calorific;
-            }
+            int calorific = meal.products.Sum(p => p.Calorific);
             return calorific;
         }
 
         public double CalculateCarbos(Meal meal)
         {
-            double carbos = 0;
-            foreach (var product in meal.products)
-            {
-                carbos += product.Carbos;
-            }
+            double carbos = meal.products.Sum(p => p.Carbos);
             return carbos;
         }
         public double CalculateProteins(Meal meal)
         {
-            double proteins = 0;
-            foreach (var product in meal.products)
-            {
-                proteins += product.Proteins;
-            }
+            double proteins = meal.products.Sum(p => p.Proteins);
             return proteins;
         }
         public double CalculateFats(Meal meal)
         {
-            double fats = 0;
-            foreach (var product in meal.products)
-            {
-                fats += product.Fats;
-            }
+            double fats = meal.products.Sum(p => p.Fats);
             return fats;
         }
     }
