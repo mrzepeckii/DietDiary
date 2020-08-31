@@ -28,7 +28,6 @@ namespace DietDiary.App.Managers
             _mealService = mealService;
             _productService = productService;
             _dayService = dayService;
-
         }
 
         public void ChoseOptionInMealMenu()
