@@ -14,9 +14,10 @@ namespace DietDiary
             UserDataService userDataService = new UserDataService();
             ProductService productService = new ProductService();
             MealService mealService = new MealService();
+            DayService dayService = new DayService(mealService);
             BodyMeasurementsService measurementsService = new BodyMeasurementsService();
             ProductManager productManager = new ProductManager(productService, actionService);
-            MealManager mealManager = new MealManager(actionService, mealService, productService);
+            MealManager mealManager = new MealManager(actionService, mealService, productService, dayService);
             UserDataManager userDataManager = new UserDataManager(userDataService, actionService);
             BodyMeasurementsManager bodyManager = new BodyMeasurementsManager(measurementsService, actionService);
             while (true)
@@ -39,13 +40,14 @@ namespace DietDiary
                         productManager.ChoseOptionInProductMenu();
                         break;
                     case '3':
-                        var mealId = mealManager.AddNewMeal();
+                        mealManager.ChoseOptionInMealMenu();
+                        //var mealId = mealManager.AddNewMeal();
                         break;
                     case '4':
-                        mealManager.RemoveMeal();
+                      //  mealManager.RemoveMeal();
                         break;
                     case '5':
-                        mealManager.MealsView();
+                      //  mealManager.MealsView();
                         break;
                     case '6':
                         bodyManager.UpdateBodyMesurements();

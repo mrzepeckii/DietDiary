@@ -10,6 +10,11 @@ namespace DietDiary.App.Concrete
     public class DayService : BaseService<Day>
     {
         private readonly MealService _mealService;
+
+        public DayService(MealService mealService)
+        {
+            _mealService = mealService;
+        }
         public int CalculateCalorificWholeDay(Day day)
         {
             int calorificWholeDay = day.MealsInDay.Sum(m => _mealService.CalculateCalorific(m));
@@ -45,7 +50,7 @@ namespace DietDiary.App.Concrete
            Meal meal = day.MealsInDay.FirstOrDefault(m => m.Id == id);
             return meal;
         }
-        public Day ChoseDayView()
+        public Day ChoseDayView(bool addDay)
         {
             DateTime dateTime;
             Day chosenDay;
@@ -54,10 +59,18 @@ namespace DietDiary.App.Concrete
             chosenDay = GetDayByDate(dateTime);
             if (chosenDay == null)
             {
-                Console.WriteLine("Brak wyników z bazy - w tym dniu nie dodano żadnego posiłku");
+                if(addDay)
+                {
+                    chosenDay = new Day(dateTime);
+                    Items.Add(chosenDay);
+                }
+                else
+                {
+                    Console.WriteLine("Brak wyników z bazy - w tym dniu nie dodano żadnego posiłku");
+                    Console.ReadKey();
+                }
             }
             return chosenDay;
-
         }
 
     }
