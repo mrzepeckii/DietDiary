@@ -28,10 +28,6 @@ namespace DietDiary.App.Managers
                 var productsView = _actionService.GetMenuActionsByMenuName("ProductsMenu");
                 Console.WriteLine();
                 productsView.ForEach(pV => Console.WriteLine($"{pV.Id}. {pV.Name}"));
-             //   for (int i = 0; i < productsView.Count; i++)
-               // {
-                 //   Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-                //}
                 var chosenOption = Console.ReadKey();
                 if (chosenOption.KeyChar == '0')
                 {
@@ -172,25 +168,6 @@ namespace DietDiary.App.Managers
             }
             return true;
         }
-
-      /*  private bool ItemsView(bool viewInMenu)
-        {
-            if (viewInMenu)
-            {
-                Console.Clear();
-            }
-           
-            if (products.Any())
-            {
-                products.ForEach(p => Console.WriteLine($"{p.Id}. {p.Name}"));
-            }
-            else
-            {
-                Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
-                return false;
-            }
-            return true;
-        }*/
 
         private int ChoseItemView()
         {
