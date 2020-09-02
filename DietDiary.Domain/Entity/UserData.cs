@@ -7,6 +7,8 @@ namespace DietDiary.Domain.Entity
 {
     public class UserData
     {
+        //dodac dzien pomiarow -- TO DO 
+        //lista pomairów -- TO DO 
         [XmlElement("Age")]
         public int Age { get; set; }
         [XmlElement("Weight")]

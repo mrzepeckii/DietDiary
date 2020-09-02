@@ -69,11 +69,6 @@ namespace DietDiary.App.Concrete
             return chosenDay;
         }
 
-        public void SaveDaysToXml(string path)
-        {
-            SaveItemsToXml("Days", path);
-        }
-
         private Day GetDayByDate(DateTime date)
         {
             Day chosenDay = Items.FirstOrDefault(d => d.Date == date);

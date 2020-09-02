@@ -4,12 +4,14 @@ using DietDiary.Domain.Entity;
 using System;
 using System.ComponentModel.Design;
 
+
 namespace DietDiary
 {
     class Program
     {
         static void Main(string[] args)
         {
+            
             MenuActionService actionService = new MenuActionService();
             UserDataService userDataService = new UserDataService();
             ProductService productService = new ProductService(@"C:\Temp\products.xml");

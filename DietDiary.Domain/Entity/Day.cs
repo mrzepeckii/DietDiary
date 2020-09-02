@@ -8,6 +8,8 @@ namespace DietDiary.Domain.Entity
 {
     public class Day : BaseEntity
     {
+        //dodac userData -- TO DO 
+        //dodac bodyMeasurements -- TO DO 
         [XmlElement("Date")]
         public DateTime Date { get; set; }
         [XmlElement("MealsInDay")]
