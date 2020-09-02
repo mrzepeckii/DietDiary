@@ -41,15 +41,8 @@ namespace DietDiary
                         break;
                     case '3':
                         mealManager.ChoseOptionInMealMenu();
-                        //var mealId = mealManager.AddNewMeal();
                         break;
                     case '4':
-                      //  mealManager.RemoveMeal();
-                        break;
-                    case '5':
-                      //  mealManager.MealsView();
-                        break;
-                    case '6':
                         bodyManager.UpdateBodyMesurements();
                         break;
                     default:

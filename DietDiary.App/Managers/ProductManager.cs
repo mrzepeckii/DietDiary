@@ -41,7 +41,7 @@ namespace DietDiary.App.Managers
                         break;
                     case '2':
                         var category = ChoseCategoryOfProductView();
-                        ItemsView(category,false);
+                        ItemsView(category,true);
                         GoToMenuView();
                         break;
                     case '3':
@@ -64,6 +64,7 @@ namespace DietDiary.App.Managers
                         if(idToRemove != 0)
                         {
                             RemoveItemById(idToRemove);
+                            Console.Clear();
                         }                  
                         GoToMenuView();
                         break;
@@ -134,6 +135,7 @@ namespace DietDiary.App.Managers
         private Product ProductDetailView()
         {
             var idToDetail = ChoseItemView();
+            Console.Clear();
             var itemToShow = _productService.GetItemById(idToDetail);
             if(itemToShow != null)
             {
