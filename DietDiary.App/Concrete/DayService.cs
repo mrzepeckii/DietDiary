@@ -11,8 +11,9 @@ namespace DietDiary.App.Concrete
     {
         private readonly MealService _mealService;
 
-        public DayService(MealService mealService)
+        public DayService(string path, MealService mealService)
         {
+            Items = ReadItemsFromXml("Days", path).ToList();
             _mealService = mealService;
         }
         public int CalculateCalorificWholeDay(Day day)

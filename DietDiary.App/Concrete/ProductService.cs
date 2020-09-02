@@ -9,7 +9,14 @@ namespace DietDiary.App.Concrete
 {
     public class ProductService : BaseService<Product>
     {
+        public ProductService()
+        {
 
+        }
+        public ProductService(string path)
+        {
+           Items = ReadItemsFromXml("Products", path).ToList();
+        }
         public void ProductDetails(Product product)
         {
             Console.WriteLine($"\nNazwa - {product.Name}");

@@ -12,9 +12,9 @@ namespace DietDiary
         {
             MenuActionService actionService = new MenuActionService();
             UserDataService userDataService = new UserDataService();
-            ProductService productService = new ProductService();
-            MealService mealService = new MealService();
-            DayService dayService = new DayService(mealService);
+            ProductService productService = new ProductService(@"C:\Temp\products.xml");
+            MealService mealService = new MealService(@"C:\Temp\meals.xml");
+            DayService dayService = new DayService(@"C:\Temp\days.xml",mealService);
             BodyMeasurementsService measurementsService = new BodyMeasurementsService();
             ProductManager productManager = new ProductManager(productService, actionService);
             MealManager mealManager = new MealManager(actionService, mealService, productService, dayService);
@@ -33,7 +33,7 @@ namespace DietDiary
                     case '0':
                         productService.SaveItemsToXml("Products", @"C:\Temp\products.xml");
                         mealService.SaveItemsToXml("Meals", @"C:\Temp\meals.xml");
-                        dayService.SaveItemsToXml("Days", @"C:\Temp\meals.xml");
+                        dayService.SaveItemsToXml("Days", @"C:\Temp\days.xml");
                         Environment.Exit(0);
                         break;
                     case '1':

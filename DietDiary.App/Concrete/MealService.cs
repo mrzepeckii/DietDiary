@@ -10,6 +10,14 @@ namespace DietDiary.App.Concrete
 {
     public class MealService : BaseService<Meal>
     {
+        public MealService()
+        {
+
+        }
+        public MealService(string path)
+        {
+            Items = ReadItemsFromXml("Meals",path).ToList();
+        }
         public int CalculateCalorific(Meal meal)
         {
             int calorific = meal.products.Sum(p => p.Calorific);

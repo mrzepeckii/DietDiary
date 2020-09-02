@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -83,6 +84,10 @@ namespace DietDiary.App.Common
             root.ElementName = elementName;
             root.IsNullable = true;
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>), root);
+            if (!File.Exists(path))
+            {
+                return new List<T>();
+            }
             string xml = File.ReadAllText(path);
             StringReader stringReader = new StringReader(xml);
             var items = (IEnumerable<T>)xmlSerializer.Deserialize(stringReader);
