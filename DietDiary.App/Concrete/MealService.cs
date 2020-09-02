@@ -31,5 +31,10 @@ namespace DietDiary.App.Concrete
             double fats = meal.products.Sum(p => p.Fats);
             return fats;
         }
+
+        public void SaveMealsToXml(string path)
+        {
+            SaveItemsToXml("Meals", path);
+        }
     }
 }

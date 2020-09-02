@@ -31,6 +31,9 @@ namespace DietDiary
                 switch (chosenOption.KeyChar)
                 {
                     case '0':
+                        productService.SaveItemsToXml("Products", @"C:\Temp\products.xml");
+                        mealService.SaveItemsToXml("Meals", @"C:\Temp\meals.xml");
+                        dayService.SaveItemsToXml("Days", @"C:\Temp\meals.xml");
                         Environment.Exit(0);
                         break;
                     case '1':

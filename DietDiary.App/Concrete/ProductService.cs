@@ -28,6 +28,11 @@ namespace DietDiary.App.Concrete
             return product;
         }
 
+        public void SaveProductsToXml(string path)
+        {
+            SaveItemsToXml("Products",path);
+        }
+
         //  public List<Product> Products;
 
         /*  public ProductService()

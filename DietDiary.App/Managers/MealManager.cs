@@ -11,12 +11,7 @@ namespace DietDiary.App.Managers
 {
     public class MealManager
     {
-        //Podzielic na mniesze metody  -- DONE 
-        //dodaj posilek -- DONE 
-        //usun posilek --DONE FORM BASE, REMOVE FORM DAY done
         //zakutalizuj posilek -- TO DO 
-        //wyswietl posilek z danego dnia -- DONE 
-        //wyswietl kalorycznosc z calego dnia -- DONE
 
         private readonly MenuActionService _actionService;
         private readonly MealService _mealService;

@@ -2,8 +2,10 @@
 using DietDiary.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace DietDiary.App.Common
 {
@@ -60,6 +62,31 @@ namespace DietDiary.App.Common
                 lastId = 0;
             }
             return lastId;
+        }
+
+        public void SaveItemsToXml(string elementName, string path)
+        {
+            XmlRootAttribute root = new XmlRootAttribute();
+            root.ElementName = elementName;
+            root.IsNullable = true;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>), root);
+
+            using (StreamWriter streamWriter = new StreamWriter(path))
+            {
+                xmlSerializer.Serialize(streamWriter, Items);
+            }
+        }
+
+        public IEnumerable<T> ReadItemsFromXml(string elementName, string path)
+        {
+            XmlRootAttribute root = new XmlRootAttribute();
+            root.ElementName = elementName;
+            root.IsNullable = true;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>), root);
+            string xml = File.ReadAllText(path);
+            StringReader stringReader = new StringReader(xml);
+            var items = (IEnumerable<T>)xmlSerializer.Deserialize(stringReader);
+            return items;
         }
     }
 }

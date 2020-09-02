@@ -39,15 +39,9 @@ namespace DietDiary.App.Concrete
             return fatsDay;
         }
 
-        private Day GetDayByDate(DateTime date)
-        {
-            Day chosenDay = Items.FirstOrDefault(d => d.Date == date);
-            return chosenDay;
-        }
-
         public Meal GetMealFromDayById(Day day, int id)
         {
-           Meal meal = day.MealsInDay.FirstOrDefault(m => m.Id == id);
+            Meal meal = day.MealsInDay.FirstOrDefault(m => m.Id == id);
             return meal;
         }
         public Day ChoseDayView(bool addDay)
@@ -59,9 +53,10 @@ namespace DietDiary.App.Concrete
             chosenDay = GetDayByDate(dateTime);
             if (chosenDay == null)
             {
-                if(addDay)
+                if (addDay)
                 {
-                    chosenDay = new Day(dateTime);
+                    int id = GetLastId();
+                    chosenDay = new Day(id +1, dateTime);
                     Items.Add(chosenDay);
                 }
                 else
@@ -73,5 +68,15 @@ namespace DietDiary.App.Concrete
             return chosenDay;
         }
 
+        public void SaveDaysToXml(string path)
+        {
+            SaveItemsToXml("Days", path);
+        }
+
+        private Day GetDayByDate(DateTime date)
+        {
+            Day chosenDay = Items.FirstOrDefault(d => d.Date == date);
+            return chosenDay;
+        }
     }
 }
