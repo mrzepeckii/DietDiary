@@ -36,6 +36,8 @@ namespace DietDiary
                         productService.SaveItemsToXml("Products", @"C:\Temp\products.xml");
                         mealService.SaveItemsToXml("Meals", @"C:\Temp\meals.xml");
                         dayService.SaveItemsToXml("Days", @"C:\Temp\days.xml");
+                        userDataService.SaveUserDataToXml();
+                        measurementsService.SaveMeasurementsToXml();
                         Environment.Exit(0);
                         break;
                     case '1':

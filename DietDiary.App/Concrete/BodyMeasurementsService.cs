@@ -15,7 +15,7 @@ namespace DietDiary.App.Concrete
 
         public BodyMeasurementsService()
         {
-            body = ReadItemsFromXml();
+            body = ReadMeasurementsFromXml();
         }
 
         public void SetBodyMeasuremnts(int calf, int thight, int waist, int chest, int biceps)
@@ -40,7 +40,7 @@ namespace DietDiary.App.Concrete
             }
         }
 
-        public BodyMeasurements ReadItemsFromXml()
+        public BodyMeasurements ReadMeasurementsFromXml()
         {
             XmlRootAttribute root = new XmlRootAttribute();
             root.ElementName = "BodyMeasurements";
