@@ -21,7 +21,7 @@ namespace DietDiary.App.Managers
         {
             Console.Clear();
             var userDataMenu = _actionService.GetMenuActionsByMenuName("BodyMeasurementsMenu");
-            Console.WriteLine($"\nTwoje aktualne pomiary:\n{_bodyService.body}");
+            Console.WriteLine($"\nTwoje aktualne pomiary:\n{_bodyService.Body}");
             for (int i = 0; i < userDataMenu.Count; i++)
                 Console.WriteLine($"{userDataMenu[i].Id}. {userDataMenu[i].Name}");
             var chosenOption = Console.ReadKey();

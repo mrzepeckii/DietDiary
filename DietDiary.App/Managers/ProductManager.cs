@@ -12,27 +12,22 @@ namespace DietDiary.App.Managers
     public class ProductManager
     {
         private readonly MenuActionService _actionService;
-        private IService<Product> _productService;
+        private ProductService _productService;
 
-        public ProductManager(IService<Product> productService, MenuActionService actionService)
+        public ProductManager(ProductService productService, MenuActionService actionService)
         {
             _productService = productService;
             _actionService = actionService;
         }
 
         public void ChoseOptionInProductMenu()
-        {
-            
+        { 
             while (true)
             {
                 Console.Clear();
                 var productsView = _actionService.GetMenuActionsByMenuName("ProductsMenu");
                 Console.WriteLine();
-                for (int i = 0; i < productsView.Count; i++)
-                {
-                    Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-                }
-
+                productsView.ForEach(pV => Console.WriteLine($"{pV.Id}. {pV.Name}"));
                 var chosenOption = Console.ReadKey();
                 if (chosenOption.KeyChar == '0')
                 {
@@ -41,104 +36,43 @@ namespace DietDiary.App.Managers
                 switch (chosenOption.KeyChar)
                 {
                     case '1':
-                        ItemsView(true);
+                        ItemsView(null,true);
+                        GoToMenuView();
                         break;
                     case '2':
-                        var id = AddNewProduct();
+                        var category = ChoseCategoryOfProductView();
+                        ItemsView(category,true);
+                        GoToMenuView();
                         break;
                     case '3':
-                        var idToRemove = RemoveItemByIdView();
-                        RemoveItemById(idToRemove);
+                        ProductDetailView();
+                        GoToMenuView();
+                        break;
+                    case '4':
+                        var id = AddNewProduct();
+                        break;
+                    case '5':
+                        var productToUpdate = ProductDetailView();
+                        if(productToUpdate != null)
+                        {
+                            AskUserAboutCalorificProductView(productToUpdate);
+                        }
+                        GoToMenuView();
+                        break;
+                    case '6':
+                        var idToRemove = ChoseItemView();
+                        if(idToRemove != 0)
+                        {
+                            RemoveItemById(idToRemove);
+                            Console.Clear();
+                        }                  
+                        GoToMenuView();
                         break;
                     default:
                         break;
                 }
             }
         }
-        public int AddNewProduct()
-        {
-            Console.Clear();
-            var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
-            Console.WriteLine();
-            for (int i = 0; i < productsView.Count; i++)
-                Console.WriteLine($"{productsView[i].Id}. {productsView[i].Name}");
-          
-            var category = Console.ReadKey();
-            int numberOfCate, calorific;
-            double carbos, fats, proteins;
-            Int32.TryParse(category.KeyChar.ToString(), out numberOfCate);
-            if (numberOfCate == 0)
-            {
-                return 0;
-            }
-            Console.Clear();
-            Console.WriteLine("\nWprowadź nazwę produktu: ");
-            string nameOfProduct = Console.ReadLine();
-            Console.WriteLine("\nWprowadź ilość kalorii: ");
-            while (!Int32.TryParse(Console.ReadLine(), out calorific))
-            {
-                Console.WriteLine("Podaj kalorie w postaci liczby całkowitej");
-            }
-            Console.WriteLine("\nWprowadź zawartość węglowodanów: ");
-            while (!double.TryParse(Console.ReadLine(), out carbos))
-            {
-                Console.WriteLine("Podaj zawartość w postaci liczby");
-            }
-            Console.WriteLine("\nWprowadź zawartość białka: ");
-            while (!double.TryParse(Console.ReadLine(), out proteins))
-            {
-                Console.WriteLine("Podaj zawartość w postaci liczby");
-            }
-            Console.WriteLine("\nWprowadź zawartość tłuszczy: ");
-            while (!double.TryParse(Console.ReadLine(), out fats))
-            {
-                Console.WriteLine("Podaj zawartość w postaci liczby");
-            }
-            var id = _productService.GetLastId();
-            Product product = new Product(id + 1, numberOfCate, nameOfProduct, calorific, proteins, carbos, fats);
-            _productService.AddItem(product);
-
-            return product.Id;
-        }
-
-        public void ItemsView(bool viewInMenu)
-        {
-            if (viewInMenu)
-            {
-                Console.Clear();
-            }
-            List<Product> products = _productService.GetAllItems();
-            if (products.Any())
-            {
-                foreach (var product in products)
-                {
-                    Console.WriteLine($"{product.Id}. {product.Name}");
-                }
-                if (viewInMenu)
-                {
-                    Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                    Console.ReadKey();
-                } 
-            }
-            else
-            {
-                Console.WriteLine($"\nAktualnie brak produktów - dodaj produkt do bazy.");
-                Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
-                Console.ReadKey();
-            }  
-        }
-
-        public int RemoveItemByIdView()
-        {
-            Console.Clear();
-            int id;
-            Console.WriteLine("Wybierz produkt z listy: ");
-            ItemsView(false);
-            var tempId = Console.ReadLine();
-            Int32.TryParse(tempId, out id);
-            return id;
-        }
-
 
         public void RemoveItemById(int id)
         {
@@ -151,6 +85,128 @@ namespace DietDiary.App.Managers
             {
                 Console.WriteLine("Nie ma takiego produktu");
             }
+        }
+
+        private int AddNewProduct()
+        {
+            var id = _productService.GetLastId();
+            Product productToAdd = new Product() { Id = id+1 };
+            var category = ChoseCategoryOfProductView();
+            if(category == 0) { return 0; }
+            productToAdd.Category = category;
+            AskUserAboutCalorificProductView(productToAdd);
+            _productService.AddItem(productToAdd);
+
+            return productToAdd.Id;
+        }
+
+        private Product AskUserAboutCalorificProductView(Product product)
+        {
+            Console.Clear();
+            int calorific;
+            double carbos, fats, proteins;
+            Console.WriteLine("\nWprowadź nazwę produktu: ");
+            string nameOfProduct = Console.ReadLine();
+            Console.WriteLine("\nWprowadź ilość kalorii w 100 gramach: ");
+            while (!Int32.TryParse(Console.ReadLine(), out calorific))
+            {
+                Console.WriteLine("Podaj kalorie w postaci liczby całkowitej");
+            }
+            Console.WriteLine("\nWprowadź zawartość węglowodanów w 100 gramach: ");
+            while (!double.TryParse(Console.ReadLine(), out carbos))
+            {
+                Console.WriteLine("Podaj zawartość w postaci liczby");
+            }
+            Console.WriteLine("\nWprowadź zawartość białka w 100 gramach: ");
+            while (!double.TryParse(Console.ReadLine(), out proteins))
+            {
+                Console.WriteLine("Podaj zawartość w postaci liczby");
+            }
+            Console.WriteLine("\nWprowadź zawartość tłuszczy w 100 gramach: ");
+            while (!double.TryParse(Console.ReadLine(), out fats))
+            {
+                Console.WriteLine("Podaj zawartość w postaci liczby");
+            }
+            product.Name = nameOfProduct;
+            _productService.UpdateNutrionalValues(product, calorific, carbos, proteins, fats);
+            return product;
+        }
+
+        private Product ProductDetailView()
+        {
+            var idToDetail = ChoseItemView();
+            Console.Clear();
+            var itemToShow = _productService.GetItemById(idToDetail);
+            if(itemToShow != null)
+            {
+                _productService.ProductDetails(itemToShow);
+            }
+            return itemToShow;
+        }
+
+        private bool ItemsView(int? category, bool viewInMenu)
+        {
+            List<Product> products;
+            if (viewInMenu)
+            {
+                Console.Clear();
+            }
+            if(category != null)
+            {
+               products = _productService.GetAllItems().Where(p => p.Category == category).ToList();
+            }
+            else
+            {
+                products = _productService.GetAllItems();
+            }
+            if (products.Any())
+            {
+                products.ForEach(p => Console.WriteLine($"{p.Id}. {p.Name}"));
+            }
+            else
+            {
+                Console.WriteLine($"\nAktualnie brak produktów z danej kateogrii - dodaj produkt do bazy.");
+                return false;
+            }
+            return true;
+        }
+
+        private int ChoseItemView()
+        {
+            Console.Clear();
+            int id = 0;
+            Console.WriteLine("Wybierz produkt z listy: ");
+            if (ItemsView(null,false))
+            {
+                var tempId = Console.ReadLine();
+                Int32.TryParse(tempId, out id);
+            }
+            return id;
+        }
+
+        private int ChoseCategoryOfProductView()
+        {
+            Console.Clear();
+            Console.WriteLine("Wybierz kategorie");
+            int category;
+            var productsView = _actionService.GetMenuActionsByMenuName("ProductsCategory");
+            Console.WriteLine();
+            productsView.ForEach(pV => Console.WriteLine($"{pV.Id}. {pV.Name}"));
+            while (!Int32.TryParse(Console.ReadKey().KeyChar.ToString(), out category))
+            {
+                Console.WriteLine("Wybierz kategorie ponownie");
+            }
+            if(!(new[] { 1, 2, 3, 4, 5 }.Contains(category)))
+            {
+                return 0;
+            }
+            return category;
+        }
+
+        private void GoToMenuView()
+        {
+            Console.WriteLine($"Wcisnij dowolny przycisk w celu powrotu do menu produktów.");
+            Console.ReadKey();
         }
     }
 }

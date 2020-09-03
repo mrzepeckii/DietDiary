@@ -13,4 +13,12 @@ namespace DietDiary.Domain.Common
             Kolacja
         }
 
+    public enum CategoryOfProducts
+    {
+        Mieso = 1,
+        Warzywa,
+        Owoce,
+        Zbozowe,
+        Nabial
+    }
 }
