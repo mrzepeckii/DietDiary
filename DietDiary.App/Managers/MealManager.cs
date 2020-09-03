@@ -103,6 +103,17 @@ namespace DietDiary.App.Managers
             }
         }
 
+        public void CalorificWholeDayView(Day day)
+        {
+            Console.WriteLine("\n--------------------------------");
+            Console.WriteLine($"Podsumowanie dnia {day.Date}");
+            Console.WriteLine($"Kalorczyność całego dnia - {_dayService.CalculateCalorificWholeDay(day)}");
+            Console.WriteLine($"Zawartość węglowodanów - {_dayService.CalculateCarbosWholeDay(day)}");
+            Console.WriteLine($"Zawartość białka - {_dayService.CalculateProteinsWholeDay(day)}");
+            Console.WriteLine($"Zawartość tłuszczy - {_dayService.CalculateFatsWholeDay(day)}");
+            Console.WriteLine("--------------------------------");
+        }
+
         private string AskAboutName()
         {
             Console.WriteLine("\nWprowadź nazwę posiłku:");
@@ -320,17 +331,6 @@ namespace DietDiary.App.Managers
                 return;
             }
             meals.Where(m => m.Category == category).ToList().ForEach(m => MealView(m));
-        }
-
-        public void CalorificWholeDayView(Day day)
-        {
-            Console.WriteLine("\n--------------------------------");
-            Console.WriteLine($"Podsumowanie dnia {day.Date}");
-            Console.WriteLine($"Kalorczyność całego dnia - {_dayService.CalculateCalorificWholeDay(day)}");
-            Console.WriteLine($"Zawartość węglowodanów - {_dayService.CalculateCarbosWholeDay(day)}");
-            Console.WriteLine($"Zawartość białka - {_dayService.CalculateProteinsWholeDay(day)}");
-            Console.WriteLine($"Zawartość tłuszczy - {_dayService.CalculateFatsWholeDay(day)}");
-            Console.WriteLine("--------------------------------");
         }
     }
 }

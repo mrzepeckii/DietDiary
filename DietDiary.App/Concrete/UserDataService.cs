@@ -1,4 +1,5 @@
-﻿using DietDiary.Domain.Entity;
+﻿using DietDiary.App.Common;
+using DietDiary.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.IO;

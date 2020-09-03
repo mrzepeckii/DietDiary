@@ -11,20 +11,20 @@ namespace DietDiary.App.Concrete
     public class BodyMeasurementsService
     {
 
-        public BodyMeasurements body { get; private set; }
+        public BodyMeasurements Body { get; private set; }
 
         public BodyMeasurementsService()
         {
-            body = ReadMeasurementsFromXml();
+            Body = ReadMeasurementsFromXml();
         }
 
         public void SetBodyMeasuremnts(int calf, int thight, int waist, int chest, int biceps)
         {
-            body.Calf = calf;
-            body.Thight = thight;
-            body.Waist = waist;
-            body.Chest = chest;
-            body.Biceps = biceps;
+            Body.Calf = calf;
+            Body.Thight = thight;
+            Body.Waist = waist;
+            Body.Chest = chest;
+            Body.Biceps = biceps;
         }
 
         public void SaveMeasurementsToXml()
@@ -36,7 +36,7 @@ namespace DietDiary.App.Concrete
 
             using (StreamWriter streamWriter = new StreamWriter(@"C:\Temp\body.xml"))
             {
-                xmlSerializer.Serialize(streamWriter, body);
+                xmlSerializer.Serialize(streamWriter, Body);
             }
         }
 
